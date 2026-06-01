@@ -1,0 +1,10 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Insectoid_Beetle: Armored shell -->
+  <path d="M280 170 L240 130 L170 125 L120 155 L110 195 L140 215 L220 220 L270 200 Z" fill="#111111" />
+  <!-- Head -->
+  <path d="M240 130 Q265 115 280 135" fill="#111111" />
+  <!-- Legs -->
+  <path d="M150 190 L130 230 L115 235" fill="none" stroke="#111111" stroke-width="14" />
+  <path d="M190 195 L195 235 L210 238" fill="none" stroke="#111111" stroke-width="14" />
+  <path d="M230 190 L255 225 L265 228" fill="none" stroke="#111111" stroke-width="14" />
+</svg>

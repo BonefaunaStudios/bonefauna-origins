@@ -1,0 +1,11 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Predator_Raptor: Lean raptor-like with long tail -->
+  <path d="M320 180 L280 120 L200 140 L180 80 L150 150 L80 160 L70 220 L120 240 L140 200 L180 220 L220 190 L280 220 L320 200 Z" fill="#111111" />
+  <!-- Head -->
+  <path d="M280 120 Q310 100 340 115 Q330 130 300 135 Z" fill="#111111" />
+  <!-- Long tail -->
+  <path d="M80 160 Q30 170 20 220 Q15 260 40 265" fill="none" stroke="#111111" stroke-width="45" stroke-linecap="round" />
+  <!-- Legs -->
+  <path d="M150 220 L145 265 L130 270" fill="none" stroke="#111111" stroke-width="18" stroke-linecap="round" />
+  <path d="M180 220 L185 265 L200 270" fill="none" stroke="#111111" stroke-width="18" stroke-linecap="round" />
+</svg>

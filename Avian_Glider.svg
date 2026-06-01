@@ -1,0 +1,6 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Aquatic_Coil: Serpentine body -->
+  <path d="M320 140 Q260 80 200 150 Q140 220 80 140 Q50 100 40 160" fill="none" stroke="#111111" stroke-width="52" stroke-linecap="round" />
+  <!-- Head -->
+  <path d="M320 140 Q355 125 370 145" fill="none" stroke="#111111" stroke-width="38" stroke-linecap="round" />
+</svg>

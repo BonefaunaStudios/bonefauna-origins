@@ -1,0 +1,13 @@
+<svg width="400" height="280" viewBox="0 0 400 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Frilled lizard silhouette - body with dramatic frill -->
+  <path d="M80 160 Q120 130 180 145 Q240 120 300 155 L320 200 Q280 210 200 195 Q140 205 80 190 Z" fill="#111"/>
+  <!-- Head -->
+  <path d="M60 145 L95 125 L125 145 L60 165 Z" fill="#111"/>
+  <!-- Frill (dramatic neck structure) -->
+  <path d="M110 120 Q90 70 130 55 Q170 45 200 75 Q220 55 260 80" fill="none" stroke="#111" stroke-width="45" stroke-linejoin="round"/>
+  <!-- Tail -->
+  <path d="M320 170 Q380 150 440 175" fill="none" stroke="#111" stroke-width="22"/>
+  <!-- Legs -->
+  <ellipse cx="150" cy="205" rx="22" ry="32" fill="#111" transform="rotate(-30 150 205)"/>
+  <ellipse cx="240" cy="205" rx="20" ry="30" fill="#111" transform="rotate(25 240 205)"/>
+</svg>
