@@ -1,8 +1,0 @@
-<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Aquatic_Leviathan: Massive with long neck -->
-  <path d="M280 190 L240 160 L190 165 L150 120 L130 80 L110 70" fill="none" stroke="#111111" stroke-width="68" stroke-linecap="round" />
-  <!-- Body -->
-  <path d="M280 190 L330 195 L355 170 L340 140 L300 135 Z" fill="#111111" />
-  <!-- Flipper-like limbs -->
-  <path d="M250 190 Q220 215 210 235" fill="none" stroke="#111111" stroke-width="38" />
-</svg>
