@@ -1,20 +1,41 @@
 const app = document.getElementById('app');
+const ARCHIVE_KEY = 'bonefaunaOriginsArchiveV02';
+const FRAGMENT_KEY = 'bonefaunaOriginsFragmentsV02';
 
 const species = [
-  { name: 'Proto-Raptor', traits: ['Adaptive', 'Watchful', 'Pack-Bonded'], silhouette: 'raptor' },
-  { name: 'Ashhorn Whelp', traits: ['Resilient', 'Territorial', 'Heat-Touched'], silhouette: 'hornbeast' },
-  { name: 'Mireback Hatchling', traits: ['Patient', 'Camouflaged', 'Wetland-Born'], silhouette: 'amphibian' },
-  { name: 'Glassjaw Strider', traits: ['Curious', 'Fast', 'Fragile-Boned'], silhouette: 'strider' },
-  { name: 'Duskwick Grazer', traits: ['Gentle', 'Nocturnal', 'Social'], silhouette: 'grazer' },
-  { name: 'Cindertail Serpent', traits: ['Heat-Seeking', 'Silent', 'Burrowing'], silhouette: 'serpent' },
-  { name: 'Thornwing Fledgling', traits: ['Alert', 'Gliding', 'Bright-Eyed'], silhouette: 'avian' },
-  { name: 'Shellroot Beetle', traits: ['Armored', 'Stubborn', 'Root-Fed'], silhouette: 'beetle' }
+  { name: 'Proto-Raptor', classification: 'Predator', traits: ['Adaptive', 'Watchful', 'Pack-Bonded'], silhouette: 'raptor' },
+  { name: 'Ashhorn Whelp', classification: 'Titan-Kin', traits: ['Resilient', 'Territorial', 'Heat-Touched'], silhouette: 'hornbeast' },
+  { name: 'Mireback Hatchling', classification: 'Amphibian', traits: ['Patient', 'Camouflaged', 'Wetland-Born'], silhouette: 'amphibian' },
+  { name: 'Glassjaw Strider', classification: 'Strider', traits: ['Curious', 'Fast', 'Fragile-Boned'], silhouette: 'strider' },
+  { name: 'Duskwick Grazer', classification: 'Grazer', traits: ['Gentle', 'Nocturnal', 'Social'], silhouette: 'grazer' },
+  { name: 'Cindertail Serpent', classification: 'Reptile', traits: ['Heat-Seeking', 'Silent', 'Burrowing'], silhouette: 'serpent' },
+  { name: 'Thornwing Fledgling', classification: 'Avian', traits: ['Alert', 'Gliding', 'Bright-Eyed'], silhouette: 'avian' },
+  { name: 'Shellroot Beetle', classification: 'Insectoid', traits: ['Armored', 'Stubborn', 'Root-Fed'], silhouette: 'beetle' }
+];
+
+const rarities = [
+  { name: 'Common', weight: 58, note: 'Baseline archive recovery.' },
+  { name: 'Uncommon', weight: 24, note: 'Unusual morphology detected.' },
+  { name: 'Rare', weight: 11, note: 'Fragmented lineage signal recovered.' },
+  { name: 'Ancient', weight: 5, note: 'Pre-collapse genetic echo detected.' },
+  { name: 'Mythic', weight: 1.7, note: 'Archive integrity unstable around specimen.' },
+  { name: 'Genesis', weight: 0.3, note: 'The archive recognizes this specimen.' }
+];
+
+const loreFragments = [
+  'The first beasts emerged beneath the Cradle, unnamed and unfinished.',
+  'Some fossils remember worlds that never existed.',
+  'The Archives predate written history and outlast every extinction.',
+  'The Titans vanished before the First Migration. Their bones still hum.',
+  'Not every specimen was born. Some were assembled by pressure, time, and error.',
+  'A living ecosystem is only a memory that learned to defend itself.'
 ];
 
 const links = [
-  ['Project Genesis', 'https://github.com/BonefaunaStudios'],
+  ['Archives', 'archive'],
+  ['Lore Fragments', 'lore'],
+  ['Studio Journal', 'journal'],
   ['GitHub', 'https://github.com/BonefaunaStudios'],
-  ['itch.io', 'https://bonefaunastudios.itch.io'],
   ['YouTube', 'https://www.youtube.com/@BonefaunaStudios']
 ];
 
@@ -88,14 +109,69 @@ const silhouettes = {
     </svg>`
 };
 
+function getArchive() {
+  try { return JSON.parse(localStorage.getItem(ARCHIVE_KEY)) || []; }
+  catch { return []; }
+}
+
+function saveArchive(entry) {
+  const archive = getArchive();
+  archive.unshift(entry);
+  localStorage.setItem(ARCHIVE_KEY, JSON.stringify(archive.slice(0, 50)));
+}
+
+function getFragments() {
+  try { return JSON.parse(localStorage.getItem(FRAGMENT_KEY)) || []; }
+  catch { return []; }
+}
+
+function saveFragment(fragment) {
+  const fragments = getFragments();
+  if (!fragments.includes(fragment)) {
+    fragments.unshift(fragment);
+    localStorage.setItem(FRAGMENT_KEY, JSON.stringify(fragments));
+  }
+}
+
+function pickWeighted(items) {
+  const total = items.reduce((sum, item) => sum + item.weight, 0);
+  let roll = Math.random() * total;
+  for (const item of items) {
+    roll -= item.weight;
+    if (roll <= 0) return item;
+  }
+  return items[0];
+}
+
 function pickCreature() {
   const seed = Math.floor(Math.random() * 900000 + 100000);
   const creature = species[seed % species.length];
-  return { ...creature, seed };
+  const rarity = pickWeighted(rarities);
+  const hasFragment = ['Ancient', 'Mythic', 'Genesis'].includes(rarity.name) || Math.random() < 0.08;
+  const fragment = hasFragment ? loreFragments[Math.floor(Math.random() * loreFragments.length)] : null;
+  return { ...creature, seed, rarity: rarity.name, rarityNote: rarity.note, fragment, discoveredAt: new Date().toISOString() };
 }
 
 function setPanel(html) {
   app.innerHTML = '<div class="mist"></div><section class="panel">' + html + '</section>';
+}
+
+function showIntro() {
+  setPanel(`
+    <div class="brand-mark">B</div>
+    <p class="eyebrow">Bonefauna Studios presents</p>
+    <h1>Bonefauna: Origins</h1>
+    <p class="tagline">Creature systems. Strange worlds.</p>
+    <div class="archive-count">Archive Discoveries: ${getArchive().length}</div>
+    <button id="startBtn" class="primary">Touch the Egg</button>
+    <div class="links compact">
+      <button class="link-button" data-view="archive">Archives</button>
+      <button class="link-button" data-view="lore">Lore Fragments</button>
+      <button class="link-button" data-view="journal">Studio Journal</button>
+    </div>
+  `);
+  document.getElementById('startBtn').addEventListener('click', showIncubation);
+  bindInternalButtons();
 }
 
 function showIncubation() {
@@ -105,25 +181,102 @@ function showIncubation() {
     <h1>Awakening...</h1>
     <p class="tagline">The archive remembers what the world forgot.</p>
   `);
-  setTimeout(showCreature, 900);
+  setTimeout(showCreature, 950);
 }
 
 function showCreature() {
   const c = pickCreature();
+  saveArchive(c);
+  if (c.fragment) saveFragment(c.fragment);
+
   setPanel(`
-    <div class="creature" aria-label="newly hatched creature silhouette">${silhouettes[c.silhouette]}</div>
+    <div class="creature rarity-${c.rarity.toLowerCase()}" aria-label="newly hatched creature silhouette">${silhouettes[c.silhouette]}</div>
     <p class="eyebrow">Archive Entry BFA-${c.seed}</p>
     <div class="card">
       <h2>${c.name}</h2>
       <p class="traits">${c.traits.join(' • ')}</p>
-      <p class="small">A first signal from the Bonefauna Archives. More systems coming soon.</p>
+      <div class="meta-grid">
+        <div><span>Classification</span><strong>${c.classification}</strong></div>
+        <div><span>Rarity</span><strong>${c.rarity}</strong></div>
+      </div>
+      <p class="small">${c.rarityNote}</p>
+      ${c.fragment ? `<div class="fragment"><span>Archive Fragment</span><p>“${c.fragment}”</p></div>` : ''}
     </div>
     <div class="links">
-      ${links.map(([label, url]) => `<a class="link-button" href="${url}" target="_blank" rel="noopener noreferrer">${label}</a>`).join('')}
+      ${links.map(([label, target]) => target.startsWith('http')
+        ? `<a class="link-button" href="${target}" target="_blank" rel="noopener noreferrer">${label}</a>`
+        : `<button class="link-button" data-view="${target}">${label}</button>`).join('')}
     </div>
     <button class="primary" id="hatchAgainBtn">Hatch Again</button>
   `);
   document.getElementById('hatchAgainBtn').addEventListener('click', showIncubation);
+  bindInternalButtons();
 }
 
-document.getElementById('startBtn').addEventListener('click', showIncubation);
+function showArchive() {
+  const archive = getArchive();
+  const items = archive.length
+    ? archive.map(entry => `
+      <article class="archive-item">
+        <strong>BFA-${entry.seed}</strong>
+        <span>${entry.name}</span>
+        <small>${entry.classification} • ${entry.rarity}</small>
+      </article>`).join('')
+    : '<p class="small">No specimens recovered yet. Touch the egg to begin the archive.</p>';
+
+  setPanel(`
+    <p class="eyebrow">Bonefauna Archives</p>
+    <h1>Recovered Specimens</h1>
+    <p class="tagline">Local archive records stored on this device.</p>
+    <div class="archive-list">${items}</div>
+    <button class="primary" id="backBtn">Return</button>
+  `);
+  document.getElementById('backBtn').addEventListener('click', showIntro);
+}
+
+function showLore() {
+  const fragments = getFragments();
+  const items = fragments.length
+    ? fragments.map((fragment, index) => `<article class="fragment wide"><span>Archive Fragment ${String(index + 1).padStart(2, '0')}</span><p>“${fragment}”</p></article>`).join('')
+    : '<p class="small">No lore fragments recovered yet. Ancient, Mythic, and Genesis specimens are more likely to reveal fragments.</p>';
+
+  setPanel(`
+    <p class="eyebrow">Recovered Lore</p>
+    <h1>Lore Fragments</h1>
+    <div class="archive-list">${items}</div>
+    <button class="primary" id="backBtn">Return</button>
+  `);
+  document.getElementById('backBtn').addEventListener('click', showIntro);
+}
+
+function showJournal() {
+  setPanel(`
+    <p class="eyebrow">Studio Journal</p>
+    <h1>Bonefauna Archives Online</h1>
+    <div class="card journal-card">
+      <p>The Bonefauna Archives are an early interactive landing experience for Bonefauna Studios.</p>
+      <p>Rather than point visitors at unfinished projects, the archive introduces the studio through creature discovery, fossil records, classifications, rarities, and fragments of an emerging world.</p>
+      <p class="small">Current build: v0.2 Archive Systems</p>
+    </div>
+    <div class="links">
+      <a class="link-button" href="https://github.com/BonefaunaStudios" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="link-button" href="https://www.youtube.com/@BonefaunaStudios" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a class="link-button" href="https://bonefaunastudios.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+    </div>
+    <button class="primary" id="backBtn">Return</button>
+  `);
+  document.getElementById('backBtn').addEventListener('click', showIntro);
+}
+
+function bindInternalButtons() {
+  document.querySelectorAll('[data-view]').forEach(button => {
+    button.addEventListener('click', () => {
+      const view = button.getAttribute('data-view');
+      if (view === 'archive') showArchive();
+      if (view === 'lore') showLore();
+      if (view === 'journal') showJournal();
+    });
+  });
+}
+
+showIntro();

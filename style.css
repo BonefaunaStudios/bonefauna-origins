@@ -8,7 +8,7 @@
 }
 
 * { box-sizing: border-box; }
-html, body { height: 100%; }
+html, body { min-height: 100%; }
 body {
   margin: 0;
   font-family: Georgia, 'Times New Roman', serif;
@@ -17,11 +17,11 @@ body {
     radial-gradient(circle at 50% 25%, rgba(88, 214, 220, .14), transparent 28%),
     radial-gradient(circle at 80% 80%, rgba(240, 139, 69, .10), transparent 30%),
     linear-gradient(160deg, #050708, #101719 48%, #020303);
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .screen {
-  min-height: 100%;
+  min-height: 100vh;
   display: grid;
   place-items: center;
   padding: 28px;
@@ -30,21 +30,23 @@ body {
 
 .screen::before {
   content: "";
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-image:
     linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
   background-size: 42px 42px;
   mask-image: radial-gradient(circle, black, transparent 78%);
+  pointer-events: none;
 }
 
 .mist {
-  position: absolute;
+  position: fixed;
   inset: -20%;
   background: radial-gradient(circle, rgba(88,214,220,.11), transparent 36%);
   filter: blur(34px);
   animation: drift 9s ease-in-out infinite alternate;
+  pointer-events: none;
 }
 
 @keyframes drift {
@@ -53,13 +55,13 @@ body {
 }
 
 .panel {
-  width: min(760px, 94vw);
+  width: min(820px, 94vw);
   min-height: 520px;
   display: grid;
   justify-items: center;
   align-content: center;
   gap: 18px;
-  padding: 42px;
+  padding: clamp(24px, 5vw, 42px);
   border: 1px solid rgba(232, 214, 184, .24);
   border-radius: 28px;
   background: var(--panel);
@@ -93,7 +95,7 @@ body {
   animation: pulse 2.4s ease-in-out infinite;
 }
 
-.egg.crack { animation: crack .9s ease both; }
+.egg.crack { animation: crack .95s ease both; }
 .egg::after {
   content: "";
   width: 58px;
@@ -112,8 +114,9 @@ body {
 
 .eyebrow, .tagline, .traits { letter-spacing: .16em; text-transform: uppercase; }
 .eyebrow { color: var(--teal); font-size: .82rem; }
-h1 { font-size: clamp(2.4rem, 7vw, 5.4rem); line-height: .95; margin: 0; }
+h1 { font-size: clamp(2.15rem, 7vw, 5.4rem); line-height: .95; margin: 0; }
 .tagline { color: #d6c7aa; font-size: .95rem; }
+.archive-count { color: var(--bone-dim); font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; }
 
 .primary, .link-button {
   border: 1px solid rgba(232,214,184,.42);
@@ -126,57 +129,39 @@ h1 { font-size: clamp(2.4rem, 7vw, 5.4rem); line-height: .95; margin: 0; }
   text-transform: uppercase;
   cursor: pointer;
   text-decoration: none;
+  font-family: inherit;
+  font-size: .82rem;
 }
 .primary:hover, .link-button:hover { border-color: var(--teal); box-shadow: 0 0 20px rgba(88,214,220,.2); }
-
-.creature {
-  width: 180px;
-  height: 140px;
-  position: relative;
-  filter: drop-shadow(0 0 24px rgba(88,214,220,.25));
-}
-.creature::before {
-  content: "";
-  position: absolute;
-  left: 16px;
-  top: 42px;
-  width: 130px;
-  height: 64px;
-  border-radius: 55% 45% 48% 52%;
-  background: linear-gradient(135deg, var(--bone), #75684e);
-}
-.creature::after {
-  content: "";
-  position: absolute;
-  right: 12px;
-  top: 28px;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--bone), #6d614b);
-  box-shadow: -92px 50px 0 -18px #bda984, -36px 63px 0 -19px #bda984;
-}
 
 .card {
   border: 1px solid rgba(232,214,184,.22);
   border-radius: 18px;
   padding: 18px;
   background: rgba(255,255,255,.035);
-  width: min(520px, 100%);
+  width: min(560px, 100%);
 }
 .card h2 { margin: 0 0 8px; font-size: 2rem; }
 .traits { color: var(--teal); font-size: .82rem; line-height: 1.8; }
 .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 8px; }
-.small { opacity: .7; font-size: .84rem; }
+.links.compact { margin-top: 0; }
+.small { opacity: .76; font-size: .88rem; line-height: 1.5; }
 
-/* Phase 1.1 creature silhouette upgrade */
 .creature {
   width: min(360px, 72vw);
   height: 220px;
-  margin: 0 auto 1.15rem;
+  margin: 0 auto .75rem;
   display: grid;
   place-items: center;
   filter: drop-shadow(0 0 24px rgba(78, 241, 255, 0.18));
+  animation: reveal .55s ease-out both;
+}
+.creature::before,
+.creature::after { content: none; }
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(12px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .creature svg {
@@ -200,4 +185,69 @@ h1 { font-size: clamp(2.4rem, 7vw, 5.4rem); line-height: .95; margin: 0; }
 .creature path[d*="M142 68"],
 .creature path[d*="M219 68"] {
   fill: none;
+}
+
+.rarity-rare { filter: drop-shadow(0 0 28px rgba(88,214,220,.32)); }
+.rarity-ancient { filter: drop-shadow(0 0 30px rgba(240,139,69,.35)); }
+.rarity-mythic { filter: drop-shadow(0 0 34px rgba(210,141,255,.38)); }
+.rarity-genesis { filter: drop-shadow(0 0 42px rgba(255,239,199,.55)); }
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 14px 0;
+}
+.meta-grid div {
+  border: 1px solid rgba(232,214,184,.18);
+  border-radius: 14px;
+  padding: 12px;
+  background: rgba(0,0,0,.16);
+}
+.meta-grid span,
+.fragment span {
+  display: block;
+  color: var(--bone-dim);
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.meta-grid strong { display: block; margin-top: 5px; color: var(--teal); }
+
+.fragment {
+  border-left: 3px solid rgba(88,214,220,.5);
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: rgba(88,214,220,.06);
+  text-align: left;
+}
+.fragment p { margin: 8px 0 0; line-height: 1.45; }
+.fragment.wide { width: 100%; }
+
+.archive-list {
+  width: min(620px, 100%);
+  max-height: 330px;
+  overflow: auto;
+  display: grid;
+  gap: 10px;
+  padding-right: 6px;
+}
+.archive-item {
+  display: grid;
+  gap: 4px;
+  text-align: left;
+  border: 1px solid rgba(232,214,184,.18);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,.035);
+}
+.archive-item strong { color: var(--teal); }
+.archive-item small { color: var(--bone-dim); }
+.journal-card { text-align: left; line-height: 1.55; }
+
+@media (max-width: 620px) {
+  .panel { min-height: auto; }
+  .meta-grid { grid-template-columns: 1fr; }
+  .links { gap: 8px; }
+  .primary, .link-button { width: 100%; }
 }

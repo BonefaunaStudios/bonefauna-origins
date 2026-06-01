@@ -1,29 +1,18 @@
 # Bonefauna Origins
 
-Bonefauna Origins is the interactive landing experience for Bonefauna Studios.
+Interactive creature archive and studio landing experience for Bonefauna Studios.
 
-Rather than a traditional studio homepage, visitors discover randomly generated archive creatures, explore the Bonefauna ecosystem, and access Project Genesis and other studio projects through a lore-friendly creature archive.
+## v0.2 Archive Systems
 
-## Current Features
+- Removed unfinished project-facing links from the main discovery flow
+- Added archive-first navigation: Archives, Lore Fragments, Studio Journal
+- Added creature classifications
+- Added rarity rolls: Common, Uncommon, Rare, Ancient, Mythic, Genesis
+- Added lore fragments for special discoveries
+- Added local discovery archive using browser storage
+- Added recovered lore fragment browser
+- Improved in-universe copy and archive presentation
 
-* Randomized creature generation
-* Archive Entry system
-* Creature traits and naming
-* Multiple creature silhouette archetypes
-* Links to Bonefauna Studios projects and platforms
+## Notes
 
-## Roadmap
-
-### Phase 1.2
-
-* Fossil egg introduction
-* Egg cracking sequence
-* Creature reveal animation
-* Expanded archive generation
-
-### Future Phases
-
-* Persistent archive records
-* Project Genesis integration
-* Living ecosystem simulation
-* Community discoveries and archives
+This site is intentionally self-contained while Bonefauna Studios projects are still pre-alpha. Public project links can be reintroduced later when there is something ready to show.
