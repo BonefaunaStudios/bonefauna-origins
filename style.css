@@ -168,3 +168,36 @@ h1 { font-size: clamp(2.4rem, 7vw, 5.4rem); line-height: .95; margin: 0; }
 .traits { color: var(--teal); font-size: .82rem; line-height: 1.8; }
 .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 8px; }
 .small { opacity: .7; font-size: .84rem; }
+
+/* Phase 1.1 creature silhouette upgrade */
+.creature {
+  width: min(360px, 72vw);
+  height: 220px;
+  margin: 0 auto 1.15rem;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 0 24px rgba(78, 241, 255, 0.18));
+}
+
+.creature svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.creature path,
+.creature circle {
+  fill: rgba(210, 193, 154, 0.92);
+  stroke: rgba(255, 239, 199, 0.58);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.creature path:not([d*="C"]),
+.creature path[d*="M91 116"],
+.creature path[d*="M270 117"],
+.creature path[d*="M142 68"],
+.creature path[d*="M219 68"] {
+  fill: none;
+}
