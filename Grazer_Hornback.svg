@@ -1,0 +1,9 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Avian_Skyhunter: Predatory bird -->
+  <path d="M280 130 L240 90 L190 95 L150 130 L140 165 L170 175 L210 155 L250 165 Z" fill="#111111" />
+  <!-- Hooked beak/head -->
+  <path d="M240 90 Q270 75 285 95" fill="none" stroke="#111111" stroke-width="22" />
+  <!-- Wings spread -->
+  <path d="M190 120 Q130 70 90 110" fill="none" stroke="#111111" stroke-width="45" />
+  <path d="M210 125 Q280 70 330 105" fill="none" stroke="#111111" stroke-width="42" />
+</svg>

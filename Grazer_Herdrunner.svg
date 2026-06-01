@@ -1,0 +1,8 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Avian_Glider: Wide wings -->
+  <path d="M320 140 L240 80 L160 75 L80 130 L70 170 L120 200 L180 165 L230 180 L280 155 Z" fill="#111111" />
+  <!-- Body and tail -->
+  <path d="M180 165 L190 190 L170 210" fill="none" stroke="#111111" stroke-width="28" />
+  <!-- Head -->
+  <path d="M240 80 Q265 65 280 85" fill="none" stroke="#111111" stroke-width="19" />
+</svg>
