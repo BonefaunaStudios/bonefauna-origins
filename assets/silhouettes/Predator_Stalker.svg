@@ -1,0 +1,11 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Predator_Stalker: Low ambush posture -->
+  <path d="M320 210 L250 160 L180 155 L120 190 L80 185 L70 220 L100 235 L180 225 L250 215 Z" fill="#111111" />
+  <!-- Long neck/head -->
+  <path d="M250 160 Q280 130 310 145" fill="none" stroke="#111111" stroke-width="38" stroke-linecap="round" />
+  <!-- Tail -->
+  <path d="M80 190 Q40 195 30 230" fill="none" stroke="#111111" stroke-width="32" stroke-linecap="round" />
+  <!-- Legs low -->
+  <path d="M130 220 L125 255 L115 260" fill="none" stroke="#111111" stroke-width="16" />
+  <path d="M190 225 L195 255 L205 260" fill="none" stroke="#111111" stroke-width="16" />
+</svg>

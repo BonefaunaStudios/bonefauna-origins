@@ -1,0 +1,11 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Grazer_Herdrunner: Long legged runner -->
+  <path d="M290 170 L240 145 L190 155 L160 130 L140 170 L120 165 L110 195 L150 200 L190 185 L230 195 L260 175 Z" fill="#111111" />
+  <!-- Long legs -->
+  <path d="M165 200 L160 255 L145 260" fill="none" stroke="#111111" stroke-width="14" />
+  <path d="M195 195 L200 255 L215 260" fill="none" stroke="#111111" stroke-width="14" />
+  <!-- Head -->
+  <path d="M240 145 Q270 135 285 150" fill="none" stroke="#111111" stroke-width="26" stroke-linecap="round" />
+  <!-- Tail -->
+  <path d="M120 170 Q90 165 75 180" fill="none" stroke="#111111" stroke-width="19" />
+</svg>
