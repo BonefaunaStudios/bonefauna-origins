@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bonefauna Silhouette Library</title>
+
+  <style>
+    :root {
+      --bone: #e8d6b8;
+      --bone-dim: #b89f77;
+      --teal: #58d6dc;
+      --dark: #050708;
+      --panel: rgba(8, 13, 15, 0.82);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--bone);
+      background:
+        radial-gradient(circle at 50% 25%, rgba(88, 214, 220, .14), transparent 28%),
+        radial-gradient(circle at 80% 80%, rgba(240, 139, 69, .10), transparent 30%),
+        linear-gradient(160deg, #050708, #101719 48%, #020303);
+      padding: 28px;
+    }
+
+    header {
+      max-width: 1100px;
+      margin: 0 auto 28px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 6vw, 4rem);
+    }
+
+    p {
+      color: var(--bone-dim);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+
+    .grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(232, 214, 184, .22);
+      border-radius: 20px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 0 38px rgba(88,214,220,.08);
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: var(--teal);
+      letter-spacing: .08em;
+    }
+
+    .frame {
+      height: 220px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(232,214,184,.12);
+      overflow: hidden;
+    }
+
+    .frame img {
+      width: 92%;
+      height: 92%;
+      object-fit: contain;
+      display: block;
+    }
+
+    footer {
+      max-width: 1100px;
+      margin: 28px auto 0;
+      text-align: center;
+      opacity: .7;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Bonefauna Silhouette Library</h1>
+    <p>Internal archive test page · 18 specimen silhouettes</p>
+  </header>
+
+  <main class="grid">
+
+    <section class="card">
+      <h2>Amphibian_BogLeaper</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Amphibian_BogLeaper.svg" alt="Amphibian BogLeaper silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Amphibian_Mireback</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Amphibian_Mireback.svg" alt="Amphibian Mireback silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Aquatic_Coil</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Aquatic_Coil.svg" alt="Aquatic Coil silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Aquatic_Leviathan</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Aquatic_Leviathan.svg" alt="Aquatic Leviathan silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Avian_Glider</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Avian_Glider.svg" alt="Avian Glider silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Avian_Skyhunter</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Avian_Skyhunter.svg" alt="Avian Skyhunter silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Grazer_Herdrunner</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Grazer_Herdrunner.svg" alt="Grazer Herdrunner silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Grazer_Hornback</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Grazer_Hornback.svg" alt="Grazer Hornback silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Grazer_Longneck</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Grazer_Longneck.svg" alt="Grazer Longneck silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Insectoid_Beetle</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Insectoid_Beetle.svg" alt="Insectoid Beetle silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Predator_Raptor</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Predator_Raptor.svg" alt="Predator Raptor silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Predator_Saber</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Predator_Saber.svg" alt="Predator Saber silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Predator_Stalker</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Predator_Stalker.svg" alt="Predator Stalker silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Reptile_Crocodilian</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Reptile_Crocodilian.svg" alt="Reptile Crocodilian silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Reptile_Frilled</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Reptile_Frilled.svg" alt="Reptile Frilled silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Reptile_Spined</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Reptile_Spined.svg" alt="Reptile Spined silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Titan_Colossus</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Titan_Colossus.svg" alt="Titan Colossus silhouette">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Titan_Worldwalker</h2>
+      <div class="frame">
+        <img src="assets/silhouettes/Titan_Worldwalker.svg" alt="Titan Worldwalker silhouette">
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Bonefauna Studios · Silhouette archive review page
+  </footer>
+</body>
+</html>
