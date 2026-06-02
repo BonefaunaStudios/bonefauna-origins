@@ -1,28 +1,12 @@
-# Bonefauna Origins
+# Bonefauna Origins v0.4.1 Hotfix
 
-Bonefauna Origins is the interactive creature archive and discovery experience for Bonefauna Studios.
+This hotfix repairs the v0.4 archive presentation and asset integration.
 
-## v0.4 - Archive Generations
+## Fixes
 
-This release expands the archive into a more complete collectible micro-game loop.
-
-### New in v0.4
-
-- Integrated the first Bonefauna silhouette pack
-- Expanded the specimen roster to 18 archive species
-- Added all 8 classifications: Predator, Grazer, Avian, Aquatic, Insectoid, Reptile, Amphibian, and Titan
-- Added clickable specimen detail pages from the archive drawer
-- Added archive completion tracking for discoveries, species, classifications, lore, and achievements
-- Added archive achievement milestones
-- Added rarity frame upgrades and special visual treatments
-- Improved locked lore wording for stronger archive mystery
-- Added v0.3 localStorage migration support
-- Expanded Studio Journal entry for v0.4
-
-## Local Testing
-
-Open `index.html` in a browser, or host the folder through GitHub Pages.
-
-## Notes
-
-Discovery data is stored locally in the visitor's browser using `localStorage`. No account, backend, or database is required.
+- Restored vertical scrolling on desktop and mobile.
+- Removed old procedural creature pseudo-shapes that caused floating egg/blob fragments.
+- Replaced silhouette assets with the cleaned Bonefauna SVG pack under `assets/silhouettes/`.
+- Fixed specimen metadata layout so Classification, Rarity, Recovered, and Silhouette fields no longer run together.
+- Improved navigation/button visibility so lower buttons are reachable instead of being cut off.
+- Improved transparent silhouette rendering and detail-page layout.
