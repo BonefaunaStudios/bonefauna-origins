@@ -1,19 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" height="200" width="200">
   
-  <path stroke-width="12" stroke="#2a2a2a" fill="#d8c39c" d="M50 125 Q75 105 110 100 Q145 108 160 125 Q165 145 150 155 Q105 158 65 148 Z"></path>
+  <g id="core"><path stroke-width="12" stroke="currentColor" fill="currentColor" d="M50 125 Q75 105 110 100 Q145 108 160 125 Q165 145 150 155 Q105 158 65 148 Z" stroke-opacity=".72" />
   
   
-  <path stroke-width="10" stroke="#2a2a2a" fill="#d8c39c" d="M155 118 Q180 105 190 110"></path>
+  </g><g id="limbs"><path stroke-width="8" stroke="currentColor" fill="currentColor" d="M105 102 L107 73 L115 77" stroke-opacity=".72" />
+  <path stroke-width="7" stroke="currentColor" fill="currentColor" d="M125 105 L130 75 L140 80" stroke-opacity=".72" />
   
   
-  <path stroke-width="7" stroke="#2a2a2a" fill="#d8c39c" d="M85 105 L88 78 L95 82"></path>
-  <path stroke-width="8" stroke="#2a2a2a" fill="#d8c39c" d="M105 102 L107 73 L115 77"></path>
-  <path stroke-width="7" stroke="#2a2a2a" fill="#d8c39c" d="M125 105 L130 75 L140 80"></path>
+  <path stroke-linecap="round" stroke-width="10" stroke="currentColor" fill="none" d="M75 145 L70 167 L82 164" stroke-opacity=".72" />
+  </g><g id="head"><path stroke-width="10" stroke="currentColor" fill="currentColor" d="M155 118 Q180 105 190 110" stroke-opacity=".72" />
   
   
-  <path stroke-linecap="round" stroke-width="10" stroke="#2a2a2a" fill="none" d="M75 145 L70 167 L82 164"></path>
-  <path stroke-linecap="round" stroke-width="10" stroke="#2a2a2a" fill="none" d="M125 145 L130 168 L143 164"></path>
+  </g><g id="signature"><path stroke-width="7" stroke="currentColor" fill="currentColor" d="M85 105 L88 78 L95 82" stroke-opacity=".72" />
+  </g><g id="detail"><path stroke-linecap="round" stroke-width="10" stroke="currentColor" fill="none" d="M125 145 L130 168 L143 164" stroke-opacity=".72" />
   
   
-  <path stroke-linecap="round" stroke-width="13" stroke="#2a2a2a" fill="none" d="M55 140 Q30 150 18 160 Q10 170 28 165"></path>
-</svg>
+  <path stroke-linecap="round" stroke-width="13" stroke="currentColor" fill="none" d="M55 140 Q30 150 18 160 Q10 170 28 165" stroke-opacity=".72" />
+</g></svg>

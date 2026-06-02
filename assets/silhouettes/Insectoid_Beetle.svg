@@ -1,23 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" height="200" width="200">
   
-  <ellipse transform="rotate(-15 115 105)" stroke-width="14" stroke="#2a2a2a" fill="#d8c39c" ry="42" rx="65" cy="105" cx="115"></ellipse>
+  <g id="core"><ellipse transform="rotate(-15 115 105)" stroke-width="14" stroke="currentColor" fill="currentColor" ry="42" rx="65" cy="105" cx="115" stroke-opacity=".72" />
   
   
-  <path stroke-width="11" stroke="#2a2a2a" fill="#d8c39c" d="M65 105 Q45 95 40 115 Q45 135 70 130"></path>
+  </g><g id="limbs"><path stroke-linecap="round" stroke-width="8" stroke="currentColor" fill="none" d="M85 125 L70 150 L65 165" stroke-opacity=".72" />
+  <path stroke-linecap="round" stroke-width="8" stroke="currentColor" fill="none" d="M105 125 L115 148 L120 162" stroke-opacity=".72" />
   
   
-  <ellipse stroke-width="9" stroke="#2a2a2a" fill="#d8c39c" ry="18" rx="22" cy="98" cx="165"></ellipse>
+  <path stroke-linecap="round" stroke-width="8" stroke="currentColor" fill="none" d="M70 115 L50 135 L45 150" stroke-opacity=".72" />
+  <path stroke-linecap="round" stroke-width="8" stroke="currentColor" fill="none" d="M125 115 L145 130 L155 145" stroke-opacity=".72" />
+  
+  
+  </g><g id="head"><path stroke-width="11" stroke="currentColor" fill="currentColor" d="M65 105 Q45 95 40 115 Q45 135 70 130" stroke-opacity=".72" />
+  
+  
+  </g><g id="signature"><ellipse stroke-width="9" stroke="currentColor" fill="currentColor" ry="18" rx="22" cy="98" cx="165" stroke-opacity=".72" />
   
   
   
-  <path stroke-linecap="round" stroke-width="8" stroke="#2a2a2a" fill="none" d="M85 125 L70 150 L65 165"></path>
-  <path stroke-linecap="round" stroke-width="8" stroke="#2a2a2a" fill="none" d="M105 125 L115 148 L120 162"></path>
-  
-  
-  <path stroke-linecap="round" stroke-width="8" stroke="#2a2a2a" fill="none" d="M70 115 L50 135 L45 150"></path>
-  <path stroke-linecap="round" stroke-width="8" stroke="#2a2a2a" fill="none" d="M125 115 L145 130 L155 145"></path>
-  
-  
-  <path stroke-linecap="round" stroke-width="8" stroke="#2a2a2a" fill="none" d="M65 100 L45 105 L35 120"></path>
-  <path stroke-linecap="round" stroke-width="8" stroke="#2a2a2a" fill="none" d="M130 100 L155 105 L165 118"></path>
-</svg>
+  </g><g id="detail"><path stroke-linecap="round" stroke-width="8" stroke="currentColor" fill="none" d="M65 100 L45 105 L35 120" stroke-opacity=".72" />
+  <path stroke-linecap="round" stroke-width="8" stroke="currentColor" fill="none" d="M130 100 L155 105 L165 118" stroke-opacity=".72" />
+</g></svg>

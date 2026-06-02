@@ -1,18 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" height="200" width="200">
   
-  <path stroke-width="11" stroke="#2a2a2a" fill="#d8c39c" d="M70 115 Q85 95 115 92 Q140 98 150 118 Q148 135 130 145 Q95 148 75 135 Z"></path>
+  <g id="core"><path stroke-width="11" stroke="currentColor" fill="currentColor" d="M70 115 Q85 95 115 92 Q140 98 150 118 Q148 135 130 145 Q95 148 75 135 Z" stroke-opacity=".72" />
   
   
-  <path stroke-width="9" stroke="#2a2a2a" fill="#d8c39c" d="M145 108 Q165 95 175 100"></path>
+  </g><g id="limbs"><path stroke-linecap="round" stroke-width="14" stroke="currentColor" fill="none" d="M120 135 Q145 165 160 172 L150 178" stroke-opacity=".72" />
   
   
-  <path stroke-linecap="round" stroke-width="14" stroke="#2a2a2a" fill="none" d="M85 135 Q65 165 55 175 L70 178"></path>
-  <path stroke-linecap="round" stroke-width="14" stroke="#2a2a2a" fill="none" d="M120 135 Q145 165 160 172 L150 178"></path>
+  <path stroke-linecap="round" stroke-width="9" stroke="currentColor" fill="none" d="M95 130 L85 148 L90 155" stroke-opacity=".72" />
+  </g><g id="head"><path stroke-width="9" stroke="currentColor" fill="currentColor" d="M145 108 Q165 95 175 100" stroke-opacity=".72" />
   
   
-  <path stroke-linecap="round" stroke-width="9" stroke="#2a2a2a" fill="none" d="M95 130 L85 148 L90 155"></path>
-  <path stroke-linecap="round" stroke-width="9" stroke="#2a2a2a" fill="none" d="M125 130 L135 147 L140 152"></path>
+  </g><g id="signature"><path stroke-linecap="round" stroke-width="14" stroke="currentColor" fill="none" d="M85 135 Q65 165 55 175 L70 178" stroke-opacity=".72" />
+  </g><g id="detail"><path stroke-linecap="round" stroke-width="9" stroke="currentColor" fill="none" d="M125 130 L135 147 L140 152" stroke-opacity=".72" />
   
   
-  <path stroke-linecap="round" stroke-width="10" stroke="#2a2a2a" fill="none" d="M70 130 Q50 140 45 135"></path>
-</svg>
+  <path stroke-linecap="round" stroke-width="10" stroke="currentColor" fill="none" d="M70 130 Q50 140 45 135" stroke-opacity=".72" />
+</g></svg>

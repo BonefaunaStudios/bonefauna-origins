@@ -1,18 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" height="200" width="200">
   
-  <path stroke-width="11" stroke="#2a2a2a" fill="#d8c39c" d="M60 120 Q80 100 110 95 Q140 100 155 118 Q158 135 145 148 Q105 152 70 140 Z"></path>
+  <g id="core"><path stroke-width="11" stroke="currentColor" fill="currentColor" d="M60 120 Q80 100 110 95 Q140 100 155 118 Q158 135 145 148 Q105 152 70 140 Z" stroke-opacity=".72" />
   
   
-  <path stroke-width="9" stroke="#2a2a2a" fill="#d8c39c" d="M150 110 Q170 95 175 88"></path>
+  </g><g id="limbs"><path stroke-width="8" stroke="currentColor" fill="currentColor" d="M148 103 Q155 70 165 62" stroke-opacity=".72" />
   
   
-  <path stroke-width="10" stroke="#2a2a2a" fill="#d8c39c" d="M145 105 Q160 65 175 55 Q185 75 170 95"></path>
-  <path stroke-width="8" stroke="#2a2a2a" fill="#d8c39c" d="M148 103 Q155 70 165 62"></path>
+  <path stroke-linecap="round" stroke-width="10" stroke="currentColor" fill="none" d="M80 140 L73 165 L85 162" stroke-opacity=".72" />
+  </g><g id="head"><path stroke-width="9" stroke="currentColor" fill="currentColor" d="M150 110 Q170 95 175 88" stroke-opacity=".72" />
   
   
-  <path stroke-linecap="round" stroke-width="10" stroke="#2a2a2a" fill="none" d="M80 140 L73 165 L85 162"></path>
-  <path stroke-linecap="round" stroke-width="10" stroke="#2a2a2a" fill="none" d="M125 140 L130 163 L142 160"></path>
+  </g><g id="signature"><path stroke-width="10" stroke="currentColor" fill="currentColor" d="M145 105 Q160 65 175 55 Q185 75 170 95" stroke-opacity=".72" />
+  </g><g id="detail"><path stroke-linecap="round" stroke-width="10" stroke="currentColor" fill="none" d="M125 140 L130 163 L142 160" stroke-opacity=".72" />
   
   
-  <path stroke-linecap="round" stroke-width="12" stroke="#2a2a2a" fill="none" d="M65 130 Q40 140 25 135 Q15 120 35 115"></path>
-</svg>
+  <path stroke-linecap="round" stroke-width="12" stroke="currentColor" fill="none" d="M65 130 Q40 140 25 135 Q15 120 35 115" stroke-opacity=".72" />
+</g></svg>

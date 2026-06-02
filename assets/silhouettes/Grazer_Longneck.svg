@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" height="200" width="200">
   
-  <path stroke-width="13" stroke="#2a2a2a" fill="#d8c39c" d="M65 125 Q80 105 110 98 Q145 105 155 125 Q160 145 140 155 Q95 158 70 145 Z"></path>
+  <g id="core"><path stroke-width="13" stroke="currentColor" fill="currentColor" d="M65 125 Q80 105 110 98 Q145 105 155 125 Q160 145 140 155 Q95 158 70 145 Z" stroke-opacity=".72" />
   
   
-  <path stroke-linecap="round" stroke-width="16" stroke="#2a2a2a" fill="none" d="M135 105 Q155 55 160 32"></path>
+  </g><g id="limbs"><path stroke-linecap="round" stroke-width="12" stroke="currentColor" fill="none" d="M85 145 L80 172 L92 170" stroke-opacity=".72" />
+  </g><g id="head"><path stroke-linecap="round" stroke-width="16" stroke="currentColor" fill="none" d="M135 105 Q155 55 160 32" stroke-opacity=".72" />
   
   
-  <ellipse transform="rotate(-25 162 29)" stroke-width="9" stroke="#2a2a2a" fill="#d8c39c" ry="13" rx="18" cy="29" cx="162"></ellipse>
+  </g><g id="signature"><ellipse transform="rotate(-25 162 29)" stroke-width="9" stroke="currentColor" fill="currentColor" ry="13" rx="18" cy="29" cx="162" stroke-opacity=".72" />
   
   
-  <path stroke-linecap="round" stroke-width="12" stroke="#2a2a2a" fill="none" d="M85 145 L80 172 L92 170"></path>
-  <path stroke-linecap="round" stroke-width="12" stroke="#2a2a2a" fill="none" d="M125 145 L130 170 L145 167"></path>
+  </g><g id="detail"><path stroke-linecap="round" stroke-width="12" stroke="currentColor" fill="none" d="M125 145 L130 170 L145 167" stroke-opacity=".72" />
   
   
-  <path stroke-linecap="round" stroke-width="12" stroke="#2a2a2a" fill="none" d="M70 135 Q45 145 35 135 Q28 120 45 115"></path>
-</svg>
+  <path stroke-linecap="round" stroke-width="12" stroke="currentColor" fill="none" d="M70 135 Q45 145 35 135 Q28 120 45 115" stroke-opacity=".72" />
+</g></svg>
