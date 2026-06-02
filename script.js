@@ -1,14 +1,41 @@
 const app = document.getElementById('app');
-let currentEntry = null;
-let currentArchiveFilter = 'All';
 
-const STORAGE_KEY = 'bonefaunaOriginsArchiveV04';
-const LEGACY_STORAGE_KEY = 'bonefaunaOriginsArchiveV03';
-const LORE_KEY = 'bonefaunaOriginsLoreV04';
-const LEGACY_LORE_KEY = 'bonefaunaOriginsLoreV03';
-const ACHIEVEMENTS_KEY = 'bonefaunaOriginsAchievementsV04';
+const STORAGE_KEY = 'bonefaunaOriginsArchiveV043';
+const LEGACY_STORAGE_KEYS = ['bonefaunaOriginsArchiveV04', 'bonefaunaOriginsArchiveV03'];
+const LORE_KEY = 'bonefaunaOriginsLoreV043';
+const LEGACY_LORE_KEYS = ['bonefaunaOriginsLoreV04', 'bonefaunaOriginsLoreV03'];
+const ACHIEVEMENTS_KEY = 'bonefaunaOriginsAchievementsV043';
+const LEGACY_ACHIEVEMENT_KEYS = ['bonefaunaOriginsAchievementsV04'];
 
 const classifications = ['Predator', 'Grazer', 'Avian', 'Aquatic', 'Insectoid', 'Reptile', 'Amphibian', 'Titan'];
+
+const silhouetteFiles = {
+  Predator_Raptor: 'Predator_Raptor.svg',
+  Predator_Stalker: 'Predator_Stalker.svg',
+  Predator_Saber: 'Predator_Saber.svg',
+
+  Grazer_Hornback: 'Grazer_Hornback.svg',
+  Grazer_Longneck: 'Grazer_Longneck.svg',
+  Grazer_Herdrunner: 'Grazer_Herdrunner.svg',
+
+  Avian_Glider: 'Avian_Glider.svg',
+  Avian_Skyhunter: 'Avian_Skyhunter.svg',
+
+  Aquatic_Coil: 'Aquatic_Coil.svg',
+  Aquatic_Leviathan: 'Aquatic_Leviathan.svg',
+
+  Insectoid_Beetle: 'Insectoid_Beetle.svg',
+
+  Reptile_Crocodilian: 'Reptile_Crocodilian.svg',
+  Reptile_Frilled: 'Reptile_Frilled.svg',
+  Reptile_Spined: 'Reptile_Spined.svg',
+
+  Amphibian_Mireback: 'Amphibian_Mireback.svg',
+  Amphibian_BogLeaper: 'Amphibian_BogLeaper.svg',
+
+  Titan_Colossus: 'Titan_Colossus.svg',
+  Titan_Worldwalker: 'Titan_Worldwalker.svg'
+};
 
 const species = [
   { name: 'Proto-Raptor', classification: 'Predator', traits: ['Adaptive', 'Watchful', 'Pack-Bonded'], silhouette: 'Predator_Raptor', note: 'A fast pursuit predator reconstructed from fragmented limb and tail records.' },
@@ -60,17 +87,17 @@ const loreFragments = [
   { id: 'FRAGMENT-10', text: 'A Genesis signal does not mean origin. It means recognition.' }
 ];
 
-const corruptedLorePlaceholders = [
+const corruptionMessages = [
   ['Archive signal lost', 'Record corrupted'],
   ['Fragment checksum failed', 'Recovery pending'],
   ['Biological record incomplete', 'Data layer damaged'],
   ['Transmission buried', 'Signal occluded'],
   ['Memory strand severed', 'Archive sealed'],
-  ['Index ghost detected', 'Specimen context missing'],
-  ['Recovery threshold unmet', 'Fragment dormant'],
-  ['Paleosignal unstable', 'Decode failed'],
-  ['Layer access denied', 'Record sealed'],
-  ['Trace remains unreadable', 'Corruption active']
+  ['Specimen context missing', 'Record unstable'],
+  ['Recovery trace unreadable', 'Signal dormant'],
+  ['Cradle imprint fractured', 'Access denied'],
+  ['Field note dissolved', 'Memory layer collapsed'],
+  ['Archive residue detected', 'Fragment locked']
 ];
 
 const achievementDefinitions = [
@@ -86,32 +113,44 @@ const achievementDefinitions = [
   { id: 'ALL_LORE', title: 'Recovered Memory', description: 'Recover every lore fragment.', test: ({ lore }) => lore.length >= loreFragments.length }
 ];
 
+let lastEntry = null;
+let activeArchiveFilter = 'All';
+
 function safeJson(key, fallback) {
   try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); }
   catch { return fallback; }
 }
 
+function migrateList(targetKey, legacyKeys) {
+  if (localStorage.getItem(targetKey)) return;
+  for (const key of legacyKeys) {
+    const value = localStorage.getItem(key);
+    if (value) {
+      localStorage.setItem(targetKey, value);
+      return;
+    }
+  }
+}
+
 function migrateIfNeeded() {
-  if (!localStorage.getItem(STORAGE_KEY) && localStorage.getItem(LEGACY_STORAGE_KEY)) {
-    localStorage.setItem(STORAGE_KEY, localStorage.getItem(LEGACY_STORAGE_KEY));
-  }
-  if (!localStorage.getItem(LORE_KEY) && localStorage.getItem(LEGACY_LORE_KEY)) {
-    localStorage.setItem(LORE_KEY, localStorage.getItem(LEGACY_LORE_KEY));
-  }
+  migrateList(STORAGE_KEY, LEGACY_STORAGE_KEYS);
+  migrateList(LORE_KEY, LEGACY_LORE_KEYS);
+  migrateList(ACHIEVEMENTS_KEY, LEGACY_ACHIEVEMENT_KEYS);
 }
 
 function getArchive() {
   migrateIfNeeded();
-  return safeJson(STORAGE_KEY, []);
+  const entries = safeJson(STORAGE_KEY, []);
+  return entries.filter(e => e && e.id && e.name);
 }
 
 function saveArchive(entries) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries.slice(-120)));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries.slice(-160)));
 }
 
 function getLore() {
   migrateIfNeeded();
-  return safeJson(LORE_KEY, []);
+  return [...new Set(safeJson(LORE_KEY, []))];
 }
 
 function saveLore(entries) {
@@ -119,7 +158,8 @@ function saveLore(entries) {
 }
 
 function getAchievements() {
-  return safeJson(ACHIEVEMENTS_KEY, []);
+  migrateIfNeeded();
+  return [...new Set(safeJson(ACHIEVEMENTS_KEY, []))];
 }
 
 function saveAchievements(entries) {
@@ -131,7 +171,9 @@ function randomSeed() {
 }
 
 function silhouettePath(key) {
-  return `assets/silhouettes/${key}.svg`;
+  const filename = silhouetteFiles[key];
+  if (!filename) return '';
+  return `assets/silhouettes/${filename}`;
 }
 
 function uniqueValues(entries, key) {
@@ -143,7 +185,7 @@ function completionStats() {
   const lore = getLore();
   const achievements = getAchievements();
   const speciesFound = uniqueValues(archive, 'name');
-  const classesFound = uniqueValues(archive, 'classification');
+  const classesFound = uniqueValues(archive, 'classification').filter(c => classifications.includes(c));
   return { archive, lore, achievements, speciesFound, classesFound };
 }
 
@@ -182,7 +224,10 @@ function maybeLore(rarity) {
   }[rarity.name] || 0.05;
 
   if (Math.random() > chance) return null;
-  return loreFragments[Math.floor(Math.random() * loreFragments.length)];
+  const unlocked = getLore();
+  const remaining = loreFragments.filter(f => !unlocked.includes(f.id));
+  const pool = remaining.length ? remaining : loreFragments;
+  return pool[Math.floor(Math.random() * pool.length)];
 }
 
 function pickCreature() {
@@ -218,10 +263,16 @@ function statBar() {
 function setPanel(html, extraClass = '') {
   app.className = `screen ${extraClass}`;
   app.innerHTML = `<div class="mist"></div>${statBar()}<section class="panel">${html}</section>`;
+  window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
 function creatureImage(entry, extra = '') {
-  return `<div class="creature rarity-${entry.rarity.toLowerCase()} ${extra}" aria-label="${entry.name} silhouette"><img src="${silhouettePath(entry.silhouette)}" alt="${entry.name} silhouette"></div>`;
+  const path = silhouettePath(entry.silhouette);
+  return `
+    <div class="creature rarity-${entry.rarity.toLowerCase()} ${extra}" aria-label="${entry.name} silhouette">
+      ${path ? `<img src="${path}" alt="${entry.name} silhouette" loading="eager">` : `<div class="missing-silhouette">Missing silhouette</div>`}
+    </div>
+  `;
 }
 
 function navButtons() {
@@ -239,69 +290,11 @@ function navButtons() {
 }
 
 function bindNav() {
-  document.getElementById('archivesBtn')?.addEventListener('click', showArchives);
+  document.getElementById('archivesBtn')?.addEventListener('click', () => showArchives(activeArchiveFilter));
   document.getElementById('loreBtn')?.addEventListener('click', showLore);
   document.getElementById('achievementsBtn')?.addEventListener('click', showAchievements);
   document.getElementById('journalBtn')?.addEventListener('click', showJournal);
   document.getElementById('aboutBtn')?.addEventListener('click', showAbout);
-}
-
-
-function renderSpecimen(entry, options = {}) {
-  const lore = loreFragments.find(f => f.id === entry.loreId);
-  const achievementsHtml = options.newAchievements?.length
-    ? `<div class="achievement-pop"><span>Archive Milestone</span><p>${options.newAchievements.map(id => achievementDefinitions.find(a => a.id === id)?.title).filter(Boolean).join(' • ')}</p></div>`
-    : '';
-
-  setPanel(`
-    ${creatureImage(entry)}
-    <p class="eyebrow">Archive Entry ${entry.id}</p>
-    <div class="card rarity-card rarity-${entry.rarity.toLowerCase()}">
-      <h2>${entry.name}</h2>
-      <p class="traits">${entry.traits.join(' • ')}</p>
-      <div class="meta-grid">
-        <div><span>Classification</span><strong>${entry.classification}</strong></div>
-        <div><span>Rarity</span><strong>${entry.rarity}</strong></div>
-      </div>
-      <p class="small">${entry.rarityNote || 'Archive note unavailable.'}</p>
-      <p class="small">${entry.note || 'Specimen notes remain incomplete.'}</p>
-      ${lore ? `<div class="fragment"><span>${lore.id}</span><p>${lore.text}</p></div>` : ''}
-      ${achievementsHtml}
-    </div>
-    ${navButtons()}
-    <button class="primary" id="hatchAgainBtn">Hatch Again</button>
-  `, 'reveal');
-
-  document.getElementById('hatchAgainBtn').addEventListener('click', showIncubation);
-  bindNav();
-}
-
-function showCurrentEntry() {
-  if (!currentEntry) {
-    const archive = getArchive();
-    currentEntry = archive[archive.length - 1] || null;
-  }
-  if (currentEntry) {
-    renderSpecimen(currentEntry);
-  } else {
-    showIntro();
-  }
-}
-
-function showIntro() {
-  app.className = 'screen intro';
-  app.innerHTML = `
-    <div class="mist"></div>
-    ${statBar()}
-    <section class="panel">
-      <div class="brand-mark">B</div>
-      <p class="eyebrow">Bonefauna Studios presents</p>
-      <h1>Bonefauna: Origins</h1>
-      <p class="tagline">Creature systems. Strange worlds.</p>
-      <button id="startBtn" class="primary">Touch the Egg</button>
-    </section>
-  `;
-  document.getElementById('startBtn').addEventListener('click', showIncubation);
 }
 
 function showIncubation() {
@@ -321,7 +314,6 @@ function showIncubation() {
 
 function showCreature() {
   const c = pickCreature();
-  const archive = getArchive();
   const entry = {
     id: c.id,
     name: c.name,
@@ -334,9 +326,10 @@ function showCreature() {
     discoveredAt: c.discoveredAt,
     loreId: c.lore ? c.lore.id : null
   };
+
+  const archive = getArchive();
   archive.push(entry);
   saveArchive(archive);
-  currentEntry = entry;
 
   if (c.lore) {
     const lore = getLore();
@@ -347,7 +340,65 @@ function showCreature() {
   const before = new Set(getAchievements());
   const after = evaluateAchievements();
   const newAchievements = after.filter(id => !before.has(id));
-  renderSpecimen(entry, { newAchievements });
+
+  lastEntry = entry;
+  renderSpecimen(entry, newAchievements);
+}
+
+function renderSpecimen(entry, newAchievements = []) {
+  setPanel(`
+    ${creatureImage(entry)}
+    <p class="eyebrow">Archive Entry ${entry.id}</p>
+    <div class="card rarity-card rarity-${entry.rarity.toLowerCase()}">
+      <h2>${entry.name}</h2>
+      <p class="traits">${entry.traits.join(' • ')}</p>
+      <div class="meta-grid">
+        <div><span>Classification</span><strong>${entry.classification}</strong></div>
+        <div><span>Rarity</span><strong>${entry.rarity}</strong></div>
+      </div>
+      <p class="small">${entry.rarityNote || 'Archive note unavailable.'}</p>
+      <p class="small">${entry.note || 'Specimen notes remain incomplete.'}</p>
+      ${entry.loreId ? loreBlock(entry.loreId) : ''}
+      ${newAchievements.length ? `<div class="achievement-pop"><span>Archive Milestone</span><p>${newAchievements.map(id => achievementDefinitions.find(a => a.id === id)?.title).filter(Boolean).join(' • ')}</p></div>` : ''}
+    </div>
+    ${navButtons()}
+    <button class="primary" id="hatchAgainBtn">Hatch Again</button>
+  `, 'reveal');
+
+  document.getElementById('hatchAgainBtn').addEventListener('click', showIncubation);
+  bindNav();
+}
+
+function loreBlock(loreId) {
+  const lore = loreFragments.find(f => f.id === loreId);
+  if (!lore) return '';
+  return `<div class="fragment"><span>${lore.id}</span><p>${lore.text}</p></div>`;
+}
+
+function showLatestOrIntro() {
+  if (lastEntry) return renderSpecimen(lastEntry);
+  const latest = getArchive().slice(-1)[0];
+  if (latest) {
+    lastEntry = latest;
+    return renderSpecimen(latest);
+  }
+  return showIntro();
+}
+
+function showIntro() {
+  app.className = 'screen intro';
+  app.innerHTML = `
+    <div class="mist"></div>
+    ${statBar()}
+    <section class="panel">
+      <div class="brand-mark">B</div>
+      <p class="eyebrow">Bonefauna Studios presents</p>
+      <h1>Bonefauna: Origins</h1>
+      <p class="tagline">Creature systems. Strange worlds.</p>
+      <button id="startBtn" class="primary">Touch the Egg</button>
+    </section>
+  `;
+  document.getElementById('startBtn').addEventListener('click', showIncubation);
 }
 
 function formatDate(value) {
@@ -357,30 +408,30 @@ function formatDate(value) {
 
 function showSpecimenDetail(entryId) {
   const entry = getArchive().find(e => e.id === entryId);
-  if (!entry) return showArchives();
-  const lore = loreFragments.find(f => f.id === entry.loreId);
+  if (!entry) return showArchives(activeArchiveFilter);
+  lastEntry = entry;
   setPanel(`
     <p class="eyebrow">Archive Entry ${entry.id}</p>
     ${creatureImage(entry, 'detail-creature')}
     <div class="card rarity-card rarity-${entry.rarity.toLowerCase()}">
       <h2>${entry.name}</h2>
       <p class="traits">${entry.traits.join(' • ')}</p>
-      <div class="meta-grid">
+      <div class="meta-grid detail-meta">
         <div><span>Classification</span><strong>${entry.classification}</strong></div>
         <div><span>Rarity</span><strong>${entry.rarity}</strong></div>
         <div><span>Recovered</span><strong>${formatDate(entry.discoveredAt)}</strong></div>
-        <div><span>Silhouette</span><strong>${entry.silhouette.replaceAll('_', ' ')}</strong></div>
+        <div><span>Silhouette</span><strong>${String(entry.silhouette || '').replaceAll('_', ' ')}</strong></div>
       </div>
       <p class="small">${entry.rarityNote || 'Archive note unavailable.'}</p>
       <p class="small">${entry.note || 'Specimen notes remain incomplete.'}</p>
-      ${lore ? `<div class="fragment"><span>${lore.id}</span><p>${lore.text}</p></div>` : ''}
+      ${entry.loreId ? loreBlock(entry.loreId) : ''}
     </div>
     <div class="links">
       <button class="link-button" id="archivesBackBtn">Back to Archives</button>
       <button class="link-button" id="hatchAgainBtn">Hatch Again</button>
     </div>
   `, 'detail-screen');
-  document.getElementById('archivesBackBtn').addEventListener('click', showArchives);
+  document.getElementById('archivesBackBtn').addEventListener('click', () => showArchives(activeArchiveFilter));
   document.getElementById('hatchAgainBtn').addEventListener('click', showIncubation);
 }
 
@@ -388,54 +439,55 @@ function classificationChecklist(activeFilter = 'All') {
   const { classesFound } = completionStats();
   const allActive = activeFilter === 'All';
   return `
-    <div class="completion-grid" role="list" aria-label="Classification filters">
-      <button class="completion-pill filter-pill ${allActive ? 'active' : ''}" data-class-filter="All">All</button>
-      ${classifications.map(c => `
-        <button class="completion-pill filter-pill ${classesFound.includes(c) ? 'found' : ''} ${activeFilter === c ? 'active' : ''}" data-class-filter="${c}">
-          ${classesFound.includes(c) ? '✓' : '?'} ${c}
-        </button>
-      `).join('')}
+    <div class="completion-grid">
+      <button class="completion-pill ${allActive ? 'active' : ''}" data-filter-class="All">All</button>
+      ${classifications.map(c => {
+        const found = classesFound.includes(c);
+        const active = activeFilter === c;
+        return `<button class="completion-pill ${found ? 'found' : ''} ${active ? 'active' : ''}" data-filter-class="${c}">${found ? '✓' : '?'} ${c}</button>`;
+      }).join('')}
     </div>
   `;
 }
 
-function showArchives(filter = currentArchiveFilter || 'All') {
-  currentArchiveFilter = filter;
+function showArchives(filterClass = 'All') {
+  activeArchiveFilter = filterClass || 'All';
   const archive = getArchive().slice().reverse();
-  const visible = filter === 'All' ? archive : archive.filter(e => e.classification === filter);
+  const filtered = activeArchiveFilter === 'All' ? archive : archive.filter(e => e.classification === activeArchiveFilter);
   setPanel(`
     <p class="eyebrow">Recovered Specimens</p>
     <h1>Archives</h1>
-    ${classificationChecklist(filter)}
+    ${classificationChecklist(activeArchiveFilter)}
     <div class="archive-list">
-      ${visible.length ? visible.map(e => `
-        <button class="archive-entry rarity-row rarity-${e.rarity.toLowerCase()}" data-entry-id="${e.id}">
+      ${filtered.length ? filtered.map(e => `
+        <button class="archive-entry rarity-row rarity-${String(e.rarity || 'Common').toLowerCase()}" data-entry-id="${e.id}">
           <strong>${e.id}</strong>
           <span>${e.name}</span>
           <small>${e.classification} • ${e.rarity}</small>
         </button>
-      `).join('') : `<p class="small">No ${filter === 'All' ? '' : filter + ' '}specimens recovered yet. Hatch more fossil eggs to expand the archive.</p>`}
+      `).join('') : `<p class="small">No ${activeArchiveFilter === 'All' ? '' : activeArchiveFilter + ' '}specimens recovered yet.</p>`}
     </div>
     <div class="links">
       <button class="link-button" id="backBtn">Return</button>
       <button class="link-button danger" id="clearBtn">Clear Archive</button>
     </div>
   `, 'archive-screen');
+
+  document.querySelectorAll('[data-filter-class]').forEach(button => {
+    button.addEventListener('click', () => showArchives(button.dataset.filterClass));
+  });
   document.querySelectorAll('[data-entry-id]').forEach(button => {
     button.addEventListener('click', () => showSpecimenDetail(button.dataset.entryId));
   });
-  document.querySelectorAll('[data-class-filter]').forEach(button => {
-    button.addEventListener('click', () => showArchives(button.dataset.classFilter));
-  });
-  document.getElementById('backBtn').addEventListener('click', showCurrentEntry);
+  document.getElementById('backBtn').addEventListener('click', showLatestOrIntro);
   document.getElementById('clearBtn').addEventListener('click', () => {
     if (confirm('Clear local Bonefauna archive discoveries on this device?')) {
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem(LORE_KEY);
       localStorage.removeItem(ACHIEVEMENTS_KEY);
-      currentEntry = null;
-      currentArchiveFilter = 'All';
-      showArchives('All');
+      activeArchiveFilter = 'All';
+      lastEntry = null;
+      showArchives();
     }
   });
 }
@@ -445,22 +497,22 @@ function showLore() {
   setPanel(`
     <p class="eyebrow">Recovered Archive Fragments</p>
     <h1>Lore Fragments</h1>
-    <div class="archive-list lore-list">
+    <div class="archive-list">
       ${loreFragments.map((f, index) => {
-        const placeholder = corruptedLorePlaceholders[index % corruptedLorePlaceholders.length];
-        const isUnlocked = unlocked.includes(f.id);
+        const unlockedFragment = unlocked.includes(f.id);
+        const corrupted = corruptionMessages[index % corruptionMessages.length];
         return `
-          <article class="archive-entry ${isUnlocked ? '' : 'locked'}">
+          <article class="archive-entry ${unlockedFragment ? '' : 'locked'}">
             <strong>${f.id}</strong>
-            <span>${isUnlocked ? f.text : placeholder[0]}</span>
-            <small>${isUnlocked ? 'Recovered' : placeholder[1]}</small>
+            <span>${unlockedFragment ? f.text : corrupted[0]}</span>
+            <small>${unlockedFragment ? 'Recovered' : corrupted[1]}</small>
           </article>
         `;
       }).join('')}
     </div>
     <button class="primary" id="backBtn">Return</button>
   `, 'archive-screen');
-  document.getElementById('backBtn').addEventListener('click', showCurrentEntry);
+  document.getElementById('backBtn').addEventListener('click', showLatestOrIntro);
 }
 
 function showAchievements() {
@@ -480,7 +532,7 @@ function showAchievements() {
     </div>
     <button class="primary" id="backBtn">Return</button>
   `, 'archive-screen');
-  document.getElementById('backBtn').addEventListener('click', showCurrentEntry);
+  document.getElementById('backBtn').addEventListener('click', showLatestOrIntro);
 }
 
 function showJournal() {
@@ -489,12 +541,12 @@ function showJournal() {
     <h1>Field Notes</h1>
     <div class="card text-card">
       <p><strong>June 2026:</strong> Bonefauna Origins began as a playable archive portal for Bonefauna Studios.</p>
-      <p><strong>v0.4:</strong> The archive has gained completion tracking, milestone recovery, specimen detail pages, rarity presentation, and the first Bonefauna silhouette pack.</p>
+      <p><strong>v0.4.3:</strong> Archive filtering, completion logic, specimen navigation, and silhouette filename mapping were stabilized.</p>
       <p>The current goal is not to promote unfinished projects, but to establish the atmosphere of the studio: creatures, ecosystems, extinction, emergence, and discovery.</p>
     </div>
     <button class="primary" id="backBtn">Return</button>
   `, 'archive-screen');
-  document.getElementById('backBtn').addEventListener('click', showCurrentEntry);
+  document.getElementById('backBtn').addEventListener('click', showLatestOrIntro);
 }
 
 function showAbout() {
@@ -507,7 +559,7 @@ function showAbout() {
     </div>
     <button class="primary" id="backBtn">Return</button>
   `, 'archive-screen');
-  document.getElementById('backBtn').addEventListener('click', showCurrentEntry);
+  document.getElementById('backBtn').addEventListener('click', showLatestOrIntro);
 }
 
 document.getElementById('startBtn').addEventListener('click', showIncubation);
