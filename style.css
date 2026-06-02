@@ -624,3 +624,310 @@ h1 {
     padding: 8px 12px;
   }
 }
+
+
+/* Bonefauna Origins v0.5.1 — Hatch reconstruction pipeline */
+.egg-choice-grid {
+  width: min(720px, 100%);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 8px 0 2px;
+}
+
+.egg-choice {
+  border: 1px solid rgba(232,214,184,.22);
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(255,255,255,.035);
+  color: var(--bone);
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  min-height: 96px;
+}
+
+.egg-choice:hover,
+.egg-choice:focus-visible {
+  border-color: var(--teal);
+  box-shadow: 0 0 20px rgba(88,214,220,.12);
+  outline: none;
+}
+
+.egg-choice strong {
+  display: block;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: .86rem;
+  margin-bottom: 8px;
+}
+
+.egg-choice span {
+  display: block;
+  color: var(--bone-dim);
+  line-height: 1.35;
+  font-size: .88rem;
+}
+
+.egg-choice-deep { background: radial-gradient(circle at 90% 10%, rgba(88,214,220,.1), rgba(255,255,255,.03)); }
+.egg-choice-sky { background: radial-gradient(circle at 80% 10%, rgba(232,214,184,.1), rgba(255,255,255,.03)); }
+.egg-choice-ancient { background: radial-gradient(circle at 80% 10%, rgba(240,139,69,.12), rgba(255,255,255,.03)); }
+
+.scan-status {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  width: min(620px, 100%);
+}
+
+.scan-status span {
+  border: 1px solid rgba(88,214,220,.22);
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: var(--bone-dim);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: .72rem;
+  background: rgba(88,214,220,.055);
+  animation: scanStatus 1.25s ease-in-out infinite alternate;
+}
+
+.scan-status span:nth-child(2) { animation-delay: .18s; }
+.scan-status span:nth-child(3) { animation-delay: .36s; }
+
+@keyframes scanStatus {
+  from { opacity: .55; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(-2px); color: var(--teal); }
+}
+
+.svg-stage {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--bone);
+  transform: scale(var(--bf-scale, 1)) rotate(var(--bf-rotate, 0deg));
+  filter:
+    sepia(var(--bf-sepia, .35))
+    hue-rotate(var(--bf-hue, 0deg))
+    brightness(var(--bf-brightness, 1))
+    contrast(var(--bf-contrast, 1))
+    drop-shadow(0 0 18px rgba(88,214,220,.22));
+}
+
+.bf-svg {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  overflow: visible;
+  color: currentColor;
+}
+
+.bf-svg [id="core"],
+.bf-svg [id="limbs"],
+.bf-svg [id="head"],
+.bf-svg [id="signature"],
+.bf-svg [id="detail"] {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: reconstructLayer .78s cubic-bezier(.16, .84, .26, 1) forwards;
+}
+
+.bf-svg [id="core"] { animation-delay: .10s; }
+.bf-svg [id="limbs"] { animation-delay: .22s; }
+.bf-svg [id="head"] { animation-delay: .34s; }
+.bf-svg [id="signature"] { animation-delay: .48s; }
+.bf-svg [id="detail"] { animation-delay: .62s; }
+
+@keyframes reconstructLayer {
+  0% { opacity: 0; transform: translateY(10px) scale(.86); filter: blur(6px); }
+  55% { opacity: .62; filter: blur(1.5px); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+.scan-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 18px;
+  opacity: .36;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(88,214,220,.0) 0px,
+      rgba(88,214,220,.0) 6px,
+      rgba(88,214,220,.18) 7px,
+      rgba(88,214,220,.0) 9px
+    );
+  mix-blend-mode: screen;
+  animation: scanLines var(--bf-scan-speed, 1s) linear infinite;
+}
+
+@keyframes scanLines {
+  from { background-position: 0 -40px; }
+  to { background-position: 0 40px; }
+}
+
+.class-effect {
+  position: absolute;
+  inset: -8px;
+  pointer-events: none;
+  border-radius: 24px;
+  opacity: .75;
+}
+
+.effect-predator .class-effect {
+  background:
+    linear-gradient(115deg, transparent 35%, rgba(240,139,69,.28) 36%, transparent 39%),
+    linear-gradient(125deg, transparent 48%, rgba(232,214,184,.18) 49%, transparent 52%);
+  animation: predatorSlash .9s ease-out both;
+}
+
+@keyframes predatorSlash {
+  from { transform: translateX(-24px); opacity: 0; }
+  45% { opacity: .9; }
+  to { transform: translateX(24px); opacity: 0; }
+}
+
+.effect-grazer .class-effect {
+  background: radial-gradient(circle at 50% 85%, rgba(232,214,184,.20), transparent 38%);
+  animation: grazerDust 1.4s ease-out both;
+}
+
+@keyframes grazerDust {
+  from { opacity: 0; transform: translateY(18px) scale(.88); }
+  50% { opacity: .72; }
+  to { opacity: 0; transform: translateY(-8px) scale(1.08); }
+}
+
+.effect-avian .class-effect {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(232,214,184,.18), transparent 28%),
+    radial-gradient(ellipse at 80% 50%, rgba(232,214,184,.18), transparent 28%);
+  animation: avianSweep 1.1s ease-out both;
+}
+
+@keyframes avianSweep {
+  from { opacity: 0; transform: scaleX(.72); }
+  45% { opacity: .8; }
+  to { opacity: 0; transform: scaleX(1.18); }
+}
+
+.effect-aquatic .class-effect,
+.effect-amphibian .class-effect {
+  background:
+    radial-gradient(ellipse at center, transparent 38%, rgba(88,214,220,.22) 40%, transparent 44%),
+    radial-gradient(ellipse at center, transparent 55%, rgba(88,214,220,.14) 57%, transparent 61%);
+  animation: rippleBloom 1.35s ease-out both;
+}
+
+@keyframes rippleBloom {
+  from { opacity: 0; transform: scale(.75); }
+  30% { opacity: .78; }
+  to { opacity: 0; transform: scale(1.25); }
+}
+
+.effect-reptile .class-effect {
+  background: linear-gradient(90deg, transparent, rgba(240,139,69,.12), transparent);
+  animation: heatShimmer 1.2s ease-in-out both;
+}
+
+@keyframes heatShimmer {
+  0% { opacity: 0; transform: skewX(0deg); }
+  35% { opacity: .72; transform: skewX(-5deg); }
+  70% { opacity: .45; transform: skewX(5deg); }
+  100% { opacity: 0; transform: skewX(0deg); }
+}
+
+.effect-insectoid .class-effect {
+  background:
+    linear-gradient(90deg, transparent 0 12%, rgba(88,214,220,.16) 13% 14%, transparent 15% 100%),
+    linear-gradient(0deg, transparent 0 18%, rgba(88,214,220,.12) 19% 20%, transparent 21% 100%);
+  background-size: 22px 22px;
+  animation: insectScan 1.15s steps(6) both;
+}
+
+@keyframes insectScan {
+  from { opacity: 0; transform: scale(.9); }
+  35% { opacity: .75; }
+  to { opacity: 0; transform: scale(1.04); }
+}
+
+.effect-titan .class-effect {
+  background: radial-gradient(circle at 50% 90%, rgba(240,139,69,.18), transparent 44%);
+  animation: titanWake 1.2s ease-out both;
+}
+
+.effect-titan {
+  animation: revealPop .6s ease both, titanShake .45s .18s ease-in-out both;
+}
+
+@keyframes titanShake {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  20% { transform: translate(-5px, 2px) scale(1.01); }
+  40% { transform: translate(5px, -1px) scale(1.01); }
+  60% { transform: translate(-3px, 1px) scale(1.005); }
+  80% { transform: translate(3px, 0) scale(1.005); }
+}
+
+@keyframes titanWake {
+  from { opacity: 0; transform: translateY(18px) scale(.88); }
+  50% { opacity: .8; }
+  to { opacity: 0; transform: translateY(-6px) scale(1.18); }
+}
+
+.reveal-event {
+  width: min(620px, 100%);
+  border: 1px solid rgba(232,214,184,.18);
+  border-radius: 999px;
+  padding: 10px 14px;
+  background: rgba(0,0,0,.18);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: .78rem;
+  animation: eventPulse 1.4s ease both;
+}
+
+.reveal-event span { color: var(--bone); }
+
+.reveal-rare { border-color: rgba(240,190,92,.55); box-shadow: 0 0 20px rgba(240,190,92,.12); }
+.reveal-ancient { border-color: rgba(240,139,69,.6); box-shadow: 0 0 24px rgba(240,139,69,.16); }
+.reveal-mythic { border-color: rgba(178,116,255,.7); box-shadow: 0 0 28px rgba(178,116,255,.22); }
+.reveal-genesis {
+  border-color: rgba(88,214,220,.95);
+  box-shadow: 0 0 42px rgba(88,214,220,.32);
+  animation: eventPulse 1.4s ease both, genesisRecognition 2.2s ease-in-out infinite;
+}
+
+@keyframes eventPulse {
+  from { opacity: 0; transform: translateY(-8px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes genesisRecognition {
+  50% { filter: brightness(1.25); }
+}
+
+@media (max-width: 680px) {
+  .egg-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .egg-choice {
+    min-height: auto;
+  }
+
+  .scan-status {
+    flex-direction: column;
+  }
+
+  .reveal-event {
+    border-radius: 18px;
+    line-height: 1.4;
+  }
+}

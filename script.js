@@ -1,13 +1,52 @@
 const app = document.getElementById('app');
 
-const STORAGE_KEY = 'bonefaunaOriginsArchiveV043';
-const LEGACY_STORAGE_KEYS = ['bonefaunaOriginsArchiveV04', 'bonefaunaOriginsArchiveV03'];
-const LORE_KEY = 'bonefaunaOriginsLoreV043';
-const LEGACY_LORE_KEYS = ['bonefaunaOriginsLoreV04', 'bonefaunaOriginsLoreV03'];
-const ACHIEVEMENTS_KEY = 'bonefaunaOriginsAchievementsV043';
-const LEGACY_ACHIEVEMENT_KEYS = ['bonefaunaOriginsAchievementsV04'];
+const STORAGE_KEY = 'bonefaunaOriginsArchiveV051';
+const LEGACY_STORAGE_KEYS = ['bonefaunaOriginsArchiveV043', 'bonefaunaOriginsArchiveV04', 'bonefaunaOriginsArchiveV03'];
+const LORE_KEY = 'bonefaunaOriginsLoreV051';
+const LEGACY_LORE_KEYS = ['bonefaunaOriginsLoreV043', 'bonefaunaOriginsLoreV04', 'bonefaunaOriginsLoreV03'];
+const ACHIEVEMENTS_KEY = 'bonefaunaOriginsAchievementsV051';
+const LEGACY_ACHIEVEMENT_KEYS = ['bonefaunaOriginsAchievementsV043', 'bonefaunaOriginsAchievementsV04'];
 
 const classifications = ['Predator', 'Grazer', 'Avian', 'Aquatic', 'Insectoid', 'Reptile', 'Amphibian', 'Titan'];
+
+const eggTypes = {
+  wild: {
+    label: 'Wild Egg',
+    description: 'Balanced recovery across the full archive.',
+    classes: classifications,
+    rarityBias: 1
+  },
+  deep: {
+    label: 'Deep Egg',
+    description: 'Higher chance for aquatic, amphibian, and reptile recoveries.',
+    classes: ['Aquatic', 'Amphibian', 'Reptile'],
+    rarityBias: 1.04
+  },
+  sky: {
+    label: 'Sky Egg',
+    description: 'Higher chance for avian and fast-moving grazer recoveries.',
+    classes: ['Avian', 'Grazer'],
+    rarityBias: 1.02
+  },
+  ancient: {
+    label: 'Ancient Egg',
+    description: 'Higher chance for titan and rare archive signals.',
+    classes: ['Titan', 'Predator', 'Reptile'],
+    rarityBias: 1.18
+  }
+};
+
+const classEffects = {
+  Predator: 'effect-predator',
+  Grazer: 'effect-grazer',
+  Avian: 'effect-avian',
+  Aquatic: 'effect-aquatic',
+  Insectoid: 'effect-insectoid',
+  Reptile: 'effect-reptile',
+  Amphibian: 'effect-amphibian',
+  Titan: 'effect-titan'
+};
+
 
 const silhouetteFiles = {
   Predator_Raptor: 'Predator_Raptor.svg',
@@ -170,6 +209,50 @@ function randomSeed() {
   return Math.floor(Math.random() * 900000 + 100000);
 }
 
+function randomBetween(min, max, decimals = 2) {
+  const value = Math.random() * (max - min) + min;
+  return Number(value.toFixed(decimals));
+}
+
+function pickFrom(list) {
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+function createVisualVariation(specimen, rarity) {
+  const rareBoost = ['Rare', 'Ancient', 'Mythic', 'Genesis'].includes(rarity.name) ? 1 : 0;
+  const classHue = {
+    Predator: -8,
+    Grazer: 10,
+    Avian: 18,
+    Aquatic: -20,
+    Insectoid: 28,
+    Reptile: 6,
+    Amphibian: -12,
+    Titan: 0
+  }[specimen.classification] || 0;
+
+  return {
+    hue: Math.round(classHue + randomBetween(-10, 10, 0)),
+    sepia: randomBetween(0.22, 0.52 + rareBoost * 0.12),
+    brightness: randomBetween(0.94, 1.12 + rareBoost * 0.08),
+    contrast: randomBetween(0.96, 1.18),
+    scale: randomBetween(0.96, 1.05),
+    rotate: randomBetween(-2.2, 2.2),
+    scan: randomBetween(0.85, 1.25)
+  };
+}
+
+function visualStyle(visual = {}) {
+  const hue = visual.hue ?? 0;
+  const sepia = visual.sepia ?? 0.35;
+  const brightness = visual.brightness ?? 1;
+  const contrast = visual.contrast ?? 1.05;
+  const scale = visual.scale ?? 1;
+  const rotate = visual.rotate ?? 0;
+  const scan = visual.scan ?? 1;
+  return `--bf-hue:${hue}deg;--bf-sepia:${sepia};--bf-brightness:${brightness};--bf-contrast:${contrast};--bf-scale:${scale};--bf-rotate:${rotate}deg;--bf-scan-speed:${scan}s;`;
+}
+
 function silhouettePath(key) {
   const filename = silhouetteFiles[key];
   if (!filename) return '';
@@ -203,9 +286,9 @@ function evaluateAchievements() {
   return [...current];
 }
 
-function pickRarity() {
+function pickRarity(rarityBias = 1) {
   const total = rarityTable.reduce((sum, r) => sum + r.weight, 0);
-  let roll = Math.random() * total;
+  let roll = Math.random() * total / Math.max(0.75, rarityBias);
   for (const rarity of rarityTable) {
     roll -= rarity.weight;
     if (roll <= 0) return rarity;
@@ -230,11 +313,14 @@ function maybeLore(rarity) {
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-function pickCreature() {
+function pickCreature(eggType = 'wild') {
+  const egg = eggTypes[eggType] || eggTypes.wild;
   const seed = randomSeed();
-  const creature = species[seed % species.length];
-  const rarity = pickRarity();
+  const pool = species.filter(s => egg.classes.includes(s.classification));
+  const creature = pool.length ? pool[seed % pool.length] : species[seed % species.length];
+  const rarity = pickRarity(egg.rarityBias || 1);
   const lore = maybeLore(rarity);
+  const visual = createVisualVariation(creature, rarity);
   return {
     ...creature,
     seed,
@@ -242,6 +328,9 @@ function pickCreature() {
     rarity: rarity.name,
     rarityNote: rarity.note,
     lore,
+    eggType,
+    eggLabel: egg.label,
+    visual,
     discoveredAt: new Date().toISOString()
   };
 }
@@ -264,15 +353,53 @@ function setPanel(html, extraClass = '') {
   app.className = `screen ${extraClass}`;
   app.innerHTML = `<div class="mist"></div>${statBar()}<section class="panel">${html}</section>`;
   window.scrollTo({ top: 0, behavior: 'instant' });
+  hydrateInlineSilhouettes();
+}
+
+async function hydrateInlineSilhouettes() {
+  const targets = [...document.querySelectorAll('[data-silhouette-src]')];
+  for (const target of targets) {
+    const src = target.dataset.silhouetteSrc;
+    try {
+      const response = await fetch(src, { cache: 'force-cache' });
+      if (!response.ok) throw new Error(`Missing silhouette: ${src}`);
+      const svgText = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(svgText, 'image/svg+xml');
+      const svg = doc.querySelector('svg');
+      if (!svg) throw new Error(`Invalid SVG: ${src}`);
+      svg.classList.add('bf-svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.querySelectorAll('script, foreignObject').forEach(node => node.remove());
+      target.innerHTML = '';
+      target.appendChild(document.importNode(svg, true));
+    } catch (error) {
+      target.innerHTML = `<img src="${src}" alt="" loading="eager">`;
+    }
+  }
 }
 
 function creatureImage(entry, extra = '') {
   const path = silhouettePath(entry.silhouette);
+  const effect = classEffects[entry.classification] || '';
+  const style = visualStyle(entry.visual);
   return `
-    <div class="creature rarity-${entry.rarity.toLowerCase()} ${extra}" aria-label="${entry.name} silhouette">
-      ${path ? `<img src="${path}" alt="${entry.name} silhouette" loading="eager">` : `<div class="missing-silhouette">Missing silhouette</div>`}
+    <div class="creature rarity-${String(entry.rarity || 'Common').toLowerCase()} ${effect} ${extra}" style="${style}" aria-label="${entry.name} silhouette">
+      ${path ? `<div class="svg-stage" data-silhouette-src="${path}"></div>` : `<div class="missing-silhouette">Missing silhouette</div>`}
+      <span class="scan-lines"></span>
+      <span class="class-effect"></span>
     </div>
   `;
+}
+
+function revealOverlay(entry) {
+  const rarity = String(entry.rarity || 'Common').toLowerCase();
+  if (!['rare', 'ancient', 'mythic', 'genesis'].includes(rarity)) return '';
+  const label = rarity === 'genesis' ? 'Genesis Signal Recognized' :
+                rarity === 'mythic' ? 'Myth-Class Archive Event' :
+                rarity === 'ancient' ? 'Ancient Recovery Echo' :
+                'Rare Signal Stabilized';
+  return `<div class="reveal-event reveal-${rarity}"><span>${label}</span></div>`;
 }
 
 function navButtons() {
@@ -297,23 +424,33 @@ function bindNav() {
   document.getElementById('aboutBtn')?.addEventListener('click', showAbout);
 }
 
-function showIncubation() {
+function hatch(eggType = 'wild') {
+  showIncubation(eggType);
+}
+
+function showIncubation(eggType = 'wild') {
+  const egg = eggTypes[eggType] || eggTypes.wild;
   setPanel(`
-    <div class="egg crack">
+    <div class="egg crack egg-${eggType}">
       <span class="shard shard-a"></span>
       <span class="shard shard-b"></span>
       <span class="shard shard-c"></span>
       <span class="flash"></span>
     </div>
-    <p class="eyebrow">Incubation event detected</p>
-    <h1>Awakening...</h1>
-    <p class="tagline">The archive remembers what the world forgot.</p>
-  `, 'incubating');
-  setTimeout(showCreature, 1250);
+    <p class="eyebrow">Incubation event detected · ${egg.label}</p>
+    <h1>Scanning...</h1>
+    <p class="tagline">${egg.description}</p>
+    <div class="scan-status">
+      <span>Static purge</span>
+      <span>Signal lock</span>
+      <span>Specimen reconstruction</span>
+    </div>
+  `, `incubating egg-${eggType}`);
+  setTimeout(() => showCreature(eggType), 1450);
 }
 
-function showCreature() {
-  const c = pickCreature();
+function showCreature(eggType = 'wild') {
+  const c = pickCreature(eggType);
   const entry = {
     id: c.id,
     name: c.name,
@@ -324,7 +461,10 @@ function showCreature() {
     silhouette: c.silhouette,
     note: c.note,
     discoveredAt: c.discoveredAt,
-    loreId: c.lore ? c.lore.id : null
+    loreId: c.lore ? c.lore.id : null,
+    eggType: c.eggType,
+    eggLabel: c.eggLabel,
+    visual: c.visual
   };
 
   const archive = getArchive();
@@ -347,6 +487,7 @@ function showCreature() {
 
 function renderSpecimen(entry, newAchievements = []) {
   setPanel(`
+    ${revealOverlay(entry)}
     ${creatureImage(entry)}
     <p class="eyebrow">Archive Entry ${entry.id}</p>
     <div class="card rarity-card rarity-${entry.rarity.toLowerCase()}">
@@ -355,6 +496,7 @@ function renderSpecimen(entry, newAchievements = []) {
       <div class="meta-grid">
         <div><span>Classification</span><strong>${entry.classification}</strong></div>
         <div><span>Rarity</span><strong>${entry.rarity}</strong></div>
+        <div><span>Egg Type</span><strong>${entry.eggLabel || eggTypes[entry.eggType]?.label || 'Wild Egg'}</strong></div>
       </div>
       <p class="small">${entry.rarityNote || 'Archive note unavailable.'}</p>
       <p class="small">${entry.note || 'Specimen notes remain incomplete.'}</p>
@@ -385,6 +527,25 @@ function showLatestOrIntro() {
   return showIntro();
 }
 
+function eggSelectionButtons() {
+  return `
+    <div class="egg-choice-grid">
+      ${Object.entries(eggTypes).map(([key, egg]) => `
+        <button class="egg-choice egg-choice-${key}" data-egg-type="${key}">
+          <strong>${egg.label}</strong>
+          <span>${egg.description}</span>
+        </button>
+      `).join('')}
+    </div>
+  `;
+}
+
+function bindEggChoices() {
+  document.querySelectorAll('[data-egg-type]').forEach(button => {
+    button.addEventListener('click', () => hatch(button.dataset.eggType));
+  });
+}
+
 function showIntro() {
   app.className = 'screen intro';
   app.innerHTML = `
@@ -395,10 +556,12 @@ function showIntro() {
       <p class="eyebrow">Bonefauna Studios presents</p>
       <h1>Bonefauna: Origins</h1>
       <p class="tagline">Creature systems. Strange worlds.</p>
-      <button id="startBtn" class="primary">Touch the Egg</button>
+      ${eggSelectionButtons()}
+      <button id="startBtn" class="primary">Touch the Wild Egg</button>
     </section>
   `;
-  document.getElementById('startBtn').addEventListener('click', showIncubation);
+  document.getElementById('startBtn').addEventListener('click', () => hatch('wild'));
+  bindEggChoices();
 }
 
 function formatDate(value) {
@@ -421,6 +584,7 @@ function showSpecimenDetail(entryId) {
         <div><span>Rarity</span><strong>${entry.rarity}</strong></div>
         <div><span>Recovered</span><strong>${formatDate(entry.discoveredAt)}</strong></div>
         <div><span>Silhouette</span><strong>${String(entry.silhouette || '').replaceAll('_', ' ')}</strong></div>
+        <div><span>Egg Type</span><strong>${entry.eggLabel || eggTypes[entry.eggType]?.label || 'Wild Egg'}</strong></div>
       </div>
       <p class="small">${entry.rarityNote || 'Archive note unavailable.'}</p>
       <p class="small">${entry.note || 'Specimen notes remain incomplete.'}</p>
@@ -562,4 +726,5 @@ function showAbout() {
   document.getElementById('backBtn').addEventListener('click', showLatestOrIntro);
 }
 
-document.getElementById('startBtn').addEventListener('click', showIncubation);
+document.getElementById('startBtn')?.addEventListener('click', () => hatch('wild'));
+showIntro();
