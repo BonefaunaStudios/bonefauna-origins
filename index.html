@@ -3,22 +3,390 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bonefauna: Origins</title>
-  <meta name="description" content="Bonefauna Studios — Creature systems. Strange worlds." />
+  <title>Bonefauna Studios — Simulation Games About Life</title>
+  <meta name="description" content="Bonefauna Studios — Independent simulation games exploring genetics, ecosystems, evolution, extinction, and discovery." />
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Bonefauna Studios — Simulation Games About Life" />
+  <meta property="og:description" content="Bonefauna Studios — Independent simulation games exploring genetics, ecosystems, evolution, extinction, and discovery." />
+  <meta property="og:site_name" content="Bonefauna Studios" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Bonefauna Studios — Simulation Games About Life" />
+  <meta name="twitter:description" content="Bonefauna Studios — Independent simulation games exploring genetics, ecosystems, evolution, extinction, and discovery." />
+
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <main id="app" class="screen intro">
-    <div class="mist"></div>
-    <section class="panel">
-      <div class="brand-mark">B</div>
-      <p class="eyebrow">Bonefauna Studios presents</p>
-      <h1>Bonefauna: Origins</h1>
-      <p class="tagline">Creature systems. Strange worlds.</p>
-      <button id="startBtn" class="primary">Touch the Egg</button>
+<body class="studio-body">
+  <div class="mist" aria-hidden="true"></div>
+
+  <!-- Header Navigation -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-link">
+        <span class="brand-icon">B</span>
+        <span class="brand-text">BONEFAUNA STUDIOS</span>
+      </a>
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="#work">Work</a>
+        <a href="#systems">Systems</a>
+        <a href="#ai-native">Development</a>
+        <a href="#status">Status</a>
+        <a href="origins.html" class="nav-highlight">Play Archive</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="hero-container">
+        <div class="specimen-badge">FIELD STATION RECORD · EST. 2026</div>
+        <h1>BONEFAUNA STUDIOS</h1>
+        <p class="hero-subtitle">Interactive worlds built around life, evolution, and discovery.</p>
+        <p class="hero-description">
+          Bonefauna Studios is an independent game studio exploring genetics, ecosystems, extinction, emergence, and the strange possibilities of life through simulation-driven games.
+        </p>
+        <div class="button-group">
+          <a href="#work" class="primary">Explore the Work</a>
+          <a href="origins.html" class="secondary">Enter the Archive</a>
+        </div>
+        <div class="status-bar">
+          <span class="status-tag">Independent</span>
+          <span class="status-dot" aria-hidden="true">·</span>
+          <span class="status-tag">Self-funded</span>
+          <span class="status-dot" aria-hidden="true">·</span>
+          <span class="status-tag">AI-native development</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDIO STATEMENT -->
+    <section class="section statement-section">
+      <div class="section-container">
+        <p class="eyebrow">Studio Manifesto</p>
+        <h2>WE BUILD SYSTEMS THAT CREATE STORIES.</h2>
+        <div class="statement-card">
+          <p>
+            Rather than building worlds entirely by hand, Bonefauna explores what happens when creatures, genetics, environments, and systems interact.
+          </p>
+          <p>
+            Our games are designed around simulation and discovery: populations change, traits are inherited, ecosystems develop, and unexpected outcomes become part of the experience.
+          </p>
+          <p>
+            The goal isn't to simulate nature perfectly. It's to make systems deep enough that players can discover things we didn't explicitly script.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CURRENT WORK -->
+    <section id="work" class="section work-section">
+      <div class="section-container">
+        <p class="eyebrow">Public Specimen Records</p>
+        <h2>CURRENT WORK</h2>
+        <p class="section-lead">Active experiments, prototypes, and playable records currently in development.</p>
+
+        <div class="specimen-records-grid">
+
+          <!-- PROJECT GENESIS -->
+          <article class="specimen-card">
+            <div class="specimen-header">
+              <span class="specimen-id">SPECIMEN RECORD 01</span>
+              <span class="status-pill dev">IN DEVELOPMENT</span>
+            </div>
+            <h3>PROJECT GENESIS</h3>
+            <p class="specimen-summary">Scientific creature genetics and sanctuary simulation.</p>
+            <div class="specimen-tags">
+              <span>GENETICS</span>
+              <span>BREEDING</span>
+              <span>SIMULATION</span>
+              <span>SANCTUARY</span>
+            </div>
+            <div class="specimen-footer">
+              <a href="https://github.com/EmoOreo/project-genesis-docs" target="_blank" rel="noopener noreferrer" class="record-link">
+                Repository & Documentation ↗
+              </a>
+            </div>
+          </article>
+
+          <!-- CANIDAE LINEAGES -->
+          <article class="specimen-card">
+            <div class="specimen-header">
+              <span class="specimen-id">SPECIMEN RECORD 02</span>
+              <span class="status-pill dev">IN DEVELOPMENT</span>
+            </div>
+            <h3>CANIDAE LINEAGES</h3>
+            <p class="specimen-summary">Realistic canid breeding and genetics simulation exploring inheritance, fertility, relatedness, and biological plausibility.</p>
+            <div class="specimen-tags">
+              <span>GENETICS</span>
+              <span>BREEDING</span>
+              <span>CANIDS</span>
+              <span>SIMULATION</span>
+            </div>
+            <div class="specimen-footer">
+              <a href="https://github.com/EmoOreo/canidae-lineages" target="_blank" rel="noopener noreferrer" class="record-link">
+                Repository ↗
+              </a>
+            </div>
+          </article>
+
+          <!-- PETRISEED -->
+          <article class="specimen-card">
+            <div class="specimen-header">
+              <span class="specimen-id">SPECIMEN RECORD 03</span>
+              <span class="status-pill dev">IN DEVELOPMENT</span>
+            </div>
+            <h3>PETRISEED</h3>
+            <p class="specimen-summary">Microscopic ecosystem simulation exploring microbial life, nutrient availability, population interaction, and emergent behavior.</p>
+            <div class="specimen-tags">
+              <span>MICROBES</span>
+              <span>ECOSYSTEMS</span>
+              <span>EMERGENCE</span>
+              <span>SIMULATION</span>
+            </div>
+            <div class="specimen-footer">
+              <a href="https://github.com/EmoOreo/petriseed" target="_blank" rel="noopener noreferrer" class="record-link">
+                Repository ↗
+              </a>
+            </div>
+          </article>
+
+          <!-- BONEFAUNA: ORIGINS -->
+          <article class="specimen-card highlight-card">
+            <div class="specimen-header">
+              <span class="specimen-id">SPECIMEN RECORD 04</span>
+              <span class="status-pill playable">PLAYABLE ARCHIVE</span>
+            </div>
+            <h3>BONEFAUNA: ORIGINS</h3>
+            <p class="specimen-summary">A small interactive archive experience built around creature discovery, specimen recovery, classification, lore, and the evolving identity of Bonefauna Studios.</p>
+            <div class="specimen-tags">
+              <span>DISCOVERY</span>
+              <span>CREATURES</span>
+              <span>ARCHIVE</span>
+              <span>LORE</span>
+            </div>
+            <div class="specimen-footer">
+              <a href="origins.html" class="record-link action-link">
+                Launch Interactive Archive →
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SYSTEMS -->
+    <section id="systems" class="section systems-section">
+      <div class="section-container">
+        <p class="eyebrow">Core Architecture</p>
+        <h2>BUILT AROUND SYSTEMS</h2>
+        <div class="systems-grid">
+
+          <div class="system-box">
+            <div class="system-icon">🧬</div>
+            <h3>GENETICS</h3>
+            <p>Inheritance, mutation, variation, relatedness, and trait expression.</p>
+          </div>
+
+          <div class="system-box">
+            <div class="system-icon">🌿</div>
+            <h3>ECOLOGY</h3>
+            <p>Populations, resources, environments, and interactions.</p>
+          </div>
+
+          <div class="system-box">
+            <div class="system-icon">🔍</div>
+            <h3>DISCOVERY</h3>
+            <p>Creatures and outcomes emerge through play rather than existing only as collectibles.</p>
+          </div>
+
+          <div class="system-box">
+            <div class="system-icon">⚙️</div>
+            <h3>SIMULATION</h3>
+            <p>Underlying systems continue operating beyond individual scripted events.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- AI-NATIVE DEVELOPMENT -->
+    <section id="ai-native" class="section ai-section">
+      <div class="section-container">
+        <p class="eyebrow">Engineering Methodology</p>
+        <h2>AN AI-NATIVE STUDIO</h2>
+        <p class="section-lead">
+          Bonefauna is being built around a development model where AI is an active engineering partner rather than a separate productivity tool.
+        </p>
+
+        <div class="ai-roles-grid">
+          <div class="ai-role-card">
+            <h4>ARCHITECTURE</h4>
+            <p>Exploring and maintaining complex game systems and technical designs.</p>
+          </div>
+
+          <div class="ai-role-card">
+            <h4>IMPLEMENTATION</h4>
+            <p>Building and iterating on gameplay systems, tools, interfaces, and infrastructure.</p>
+          </div>
+
+          <div class="ai-role-card">
+            <h4>RESEARCH</h4>
+            <p>Working through scientific, historical, biological, and technical material.</p>
+          </div>
+
+          <div class="ai-role-card">
+            <h4>DOCUMENTATION</h4>
+            <p>Maintaining structured project knowledge, specifications, roadmaps, and development records.</p>
+          </div>
+
+          <div class="ai-role-card full-width">
+            <h4>ITERATION</h4>
+            <p>Analyzing existing code, identifying problems, proposing solutions, and implementing changes across a growing codebase.</p>
+          </div>
+        </div>
+
+        <div class="ai-human-statement">
+          <p>
+            The human role remains essential: defining the vision, deciding what belongs in the games, evaluating results, and directing the systems we build.
+          </p>
+          <div class="experiment-quote">
+            <p class="quote-label">THE EXPERIMENT IS SIMPLE:</p>
+            <p class="quote-text">How far can a very small studio go when AI becomes part of the development team?</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISION -->
+    <section class="section vision-section">
+      <div class="section-container">
+        <p class="eyebrow">Studio Vision</p>
+        <h2>ONE STUDIO. MANY SYSTEMS.</h2>
+        <div class="vision-content">
+          <p class="vision-lead">Bonefauna began with a simple question:</p>
+          <blockquote class="vision-question">
+            "What happens when games treat living systems as the foundation rather than the decoration?"
+          </blockquote>
+          <p>
+            That question leads in different directions—from breeding and genetics to ecosystems, microorganisms, extinction, historical systems, and discovery.
+          </p>
+          <p>
+            Each project is its own game.
+          </p>
+          <p class="vision-summary">
+            Together, they form a broader exploration of simulated life.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARCHIVE PORTAL -->
+    <section class="section archive-portal-section">
+      <div class="section-container">
+        <div class="archive-portal-card">
+          <p class="eyebrow">Interactive Specimen Recovery</p>
+          <h2>THE BONEFAUNA ARCHIVE</h2>
+          <p>
+            Some things are easier to understand when they're discovered.
+          </p>
+          <p>
+            Enter the archive to recover specimens, explore classifications, uncover fragments, and experience the earliest public piece of the Bonefauna world.
+          </p>
+          <a href="origins.html" class="primary enter-archive-btn">Enter Bonefauna: Origins</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATUS -->
+    <section id="status" class="section status-section">
+      <div class="section-container">
+        <p class="eyebrow">Studio Metrics</p>
+        <h2>WHERE WE ARE</h2>
+
+        <div class="status-grid">
+          <div class="status-item">
+            <span class="status-label">STUDIO</span>
+            <span class="status-value">Independent</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">FUNDING</span>
+            <span class="status-value">Self-funded</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">TEAM</span>
+            <span class="status-value">Independent / AI-assisted development</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">CURRENT FOCUS</span>
+            <span class="status-value">Simulation systems + playable prototypes</span>
+          </div>
+          <div class="status-item full-width">
+            <span class="status-label">PUBLIC WORK</span>
+            <span class="status-value">Bonefauna: Origins</span>
+          </div>
+        </div>
+
+        <p class="status-note">
+          "Bonefauna is an independent studio currently building prototypes and foundational systems while exploring how far a small, AI-native team can push simulation-heavy game development."
+        </p>
+      </div>
+    </section>
+
+    <!-- OPEN DEVELOPMENT -->
+    <section class="section open-dev-section">
+      <div class="section-container">
+        <p class="eyebrow">Public Repositories</p>
+        <h2>SEE THE WORK</h2>
+        <p class="section-lead">
+          Bonefauna's public repositories document the experiments, prototypes, systems, and tools behind the studio.
+        </p>
+
+        <div class="open-dev-links">
+          <a href="https://github.com/BonefaunaStudios" target="_blank" rel="noopener noreferrer" class="dev-link-card">
+            <span class="dev-link-title">GitHub Organization ↗</span>
+            <span class="dev-link-desc">github.com/BonefaunaStudios</span>
+          </a>
+          <a href="https://github.com/EmoOreo/project-genesis-docs" target="_blank" rel="noopener noreferrer" class="dev-link-card">
+            <span class="dev-link-title">Project Genesis ↗</span>
+            <span class="dev-link-desc">Creature genetics and sanctuary documentation</span>
+          </a>
+          <a href="https://github.com/EmoOreo/canidae-lineages" target="_blank" rel="noopener noreferrer" class="dev-link-card">
+            <span class="dev-link-title">Canidae Lineages ↗</span>
+            <span class="dev-link-desc">Canid genetics and breeding simulation</span>
+          </a>
+          <a href="https://github.com/EmoOreo/petriseed" target="_blank" rel="noopener noreferrer" class="dev-link-card">
+            <span class="dev-link-title">PetriSeed ↗</span>
+            <span class="dev-link-desc">Microscopic ecosystem simulation</span>
+          </a>
+        </div>
+      </div>
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h3>BONEFAUNA STUDIOS</h3>
+        <p class="footer-tagline">Creature systems. Strange worlds.</p>
+        <p class="footer-subtext">Independent game development</p>
+      </div>
+
+      <div class="footer-nav">
+        <div class="footer-links">
+          <a href="https://github.com/BonefaunaStudios" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.youtube.com/@BonefaunaStudios" target="_blank" rel="noopener noreferrer">YouTube</a>
+          <a href="https://bonefaunastudios.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+        </div>
+        <p class="footer-contact">
+          Contact: <a href="mailto:bobby@bonefaunastudios.com">bobby@bonefaunastudios.com</a>
+        </p>
+        <p class="footer-copy">© 2026 Bonefauna Studios</p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
