@@ -79,10 +79,10 @@ body::before {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(5, 7, 8, 0.88);
+  background: rgba(5, 7, 8, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(232, 214, 184, 0.12);
+  border-bottom: 1px solid rgba(232, 214, 184, 0.14);
   padding: 12px 20px;
 }
 
@@ -103,6 +103,7 @@ body::before {
   color: var(--bone);
   font-weight: 700;
   letter-spacing: 0.12em;
+  min-height: 44px;
 }
 
 .brand-icon {
@@ -156,6 +157,34 @@ body::before {
 .site-nav a.nav-highlight:hover {
   border-color: var(--teal);
   box-shadow: 0 0 16px rgba(88, 214, 220, 0.2);
+}
+
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid rgba(232, 214, 184, 0.28);
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  min-height: 44px;
+  min-width: 44px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+.menu-toggle:hover,
+.menu-toggle:focus-visible {
+  border-color: var(--teal);
+  box-shadow: 0 0 12px rgba(88, 214, 220, 0.2);
+}
+
+.hamburger-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: var(--bone);
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .origins-header {
@@ -821,40 +850,79 @@ h2 {
 /* MOBILE RESPONSIVE LAYOUTS (360px, 390px, 412px Android) */
 @media (max-width: 768px) {
   .site-header {
-    padding: 10px 14px;
+    padding: 10px 16px;
   }
 
   .header-inner {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  .brand-link {
-    justify-content: center;
+  .menu-toggle {
+    display: flex;
   }
 
   .site-nav {
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
+    display: none;
+    position: absolute;
+    top: calc(100% + 11px);
+    left: -16px;
+    right: -16px;
+    background: rgba(5, 7, 8, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(232, 214, 184, 0.2);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.8);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 20px 20px;
+    gap: 4px;
+  }
+
+  .site-nav.is-active {
+    display: flex;
   }
 
   .site-nav a {
-    font-size: 0.78rem;
-    padding: 6px 8px;
+    font-size: 0.95rem;
+    padding: 12px 16px;
+    border-radius: 8px;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .site-nav a:hover,
+  .site-nav a:focus-visible {
+    background: rgba(88, 214, 220, 0.1);
+    color: var(--teal);
+  }
+
+  .site-nav a.nav-highlight {
+    border-radius: 8px;
+    margin-top: 6px;
   }
 
   .section {
-    padding: 50px 16px;
+    padding: 48px 14px;
   }
 
   .hero-section {
-    padding: 40px 14px 40px;
+    padding: 36px 12px 36px;
+    min-height: auto;
   }
 
   .hero-section h1 {
-    font-size: clamp(2.2rem, 11vw, 3.6rem);
+    font-size: clamp(2.1rem, 10vw, 3.4rem);
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+  }
+
+  .hero-description {
+    font-size: 0.98rem;
   }
 
   .button-group {
@@ -866,12 +934,22 @@ h2 {
     width: 100%;
   }
 
+  .status-bar {
+    border-radius: 14px;
+    padding: 10px 14px;
+    gap: 6px;
+  }
+
+  .status-tag {
+    font-size: 0.74rem;
+  }
+
   .statement-card, .ai-human-statement, .archive-portal-card {
-    padding: 22px 16px;
+    padding: 20px 14px;
   }
 
   .specimen-card {
-    padding: 20px 16px;
+    padding: 20px 14px;
   }
 
   .specimen-records-grid, .systems-grid, .ai-roles-grid, .open-dev-links {

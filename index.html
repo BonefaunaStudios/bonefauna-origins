@@ -27,12 +27,21 @@
         <span class="brand-icon">B</span>
         <span class="brand-text">BONEFAUNA STUDIOS</span>
       </a>
-      <nav class="site-nav" aria-label="Main Navigation">
+
+      <button id="menuToggle" class="menu-toggle" aria-expanded="false" aria-controls="siteNav" aria-label="Toggle Navigation Menu">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+
+      <nav id="siteNav" class="site-nav" aria-label="Main Navigation">
+        <a href="index.html">Home</a>
         <a href="#work">Work</a>
         <a href="#systems">Systems</a>
-        <a href="#ai-native">Development</a>
+        <a href="#ai-native">AI + Development</a>
         <a href="#status">Status</a>
-        <a href="origins.html" class="nav-highlight">Play Archive</a>
+        <a href="origins.html" class="nav-highlight">Archive</a>
+        <a href="https://github.com/BonefaunaStudios" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </nav>
     </div>
   </header>
@@ -388,5 +397,28 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleBtn = document.getElementById('menuToggle');
+      const navMenu = document.getElementById('siteNav');
+
+      if (toggleBtn && navMenu) {
+        toggleBtn.addEventListener('click', function() {
+          const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
+          toggleBtn.setAttribute('aria-expanded', !isOpen);
+          navMenu.classList.toggle('is-active');
+        });
+
+        // Close menu when clicking navigation link
+        navMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', function() {
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            navMenu.classList.remove('is-active');
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html>
